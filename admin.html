@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>     
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 0 25px 25px 0;
+            padding: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 0 30px 30px;
+            border-bottom: 2px solid #f0f8ff;
+        }
+
+        .sidebar-header h2 {
+            color: #4facfe;
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-menu {
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            margin: 8px 20px;
+            padding: 15px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+        }
+
+        .nav-item i {
+            font-size: 18px;
+            width: 20px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .top-bar h1 {
+            font-size: 32px;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border-left: 5px solid transparent;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-card.primary { border-left-color: #4facfe; }
+        .stat-card.success { border-left-color: #06d6a0; }
+        .stat-card.warning { border-left-color: #ffd166; }
+        .stat-card.danger { border-left-color: #f72585; }
+        .stat-card.info { border-left-color: #118ab2; }
+        .stat-card.purple { border-left-color: #7209b7; }
+
+        .stat-card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .stat-card.primary .stat-card-icon { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .stat-card.success .stat-card-icon { background: linear-gradient(135deg, #06d6a0, #16db93); }
+        .stat-card.warning .stat-card-icon { background: linear-gradient(135deg, #ffd166, #f77f00); }
+        .stat-card.danger .stat-card-icon { background: linear-gradient(135deg, #f72585, #b5179e); }
+        .stat-card.info .stat-card-icon { background: linear-gradient(135deg, #118ab2, #06d6a0); }
+        .stat-card.purple .stat-card-icon { background: linear-gradient(135deg, #7209b7, #480ca8); }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Content Section */
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f8ff;
+        }
+
+        .content-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #06d6a0, #16db93);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #f72585, #b5179e);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ffd166, #f77f00);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 15px;
+            border: 1px solid #e1f4ff;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        .table th,
+        .table td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #f0f8ff;
+        }
+
+        .table th {
+            background: linear-gradient(135deg, #f8faff, #e1f4ff);
+            font-weight: 600;
+            color: #333;
+        }
+
+        .table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .table tbody tr:hover {
+            background: #f8faff;
+            transform: scale(1.01);
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-active { background: #d4edda; color: #155724; }
+        .status-admitted { background: #cce5ff; color: #004085; }
+        .status-discharged { background: #d1ecf1; color: #0c5460; }
+        .status-critical { background: #f8d7da; color: #721c24; }
+        .status-stable { background: #d4edda; color: #155724; }
+        .status-scheduled { background: #fff3cd; color: #856404; }
+        .status-completed { background: #d1ecf1; color: #0c5460; }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f8ff;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            padding: 5px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: #f0f8ff;
+            color: #333;
+        }
+
+        /* Form */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1f4ff;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #4facfe;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+        }
+
+        /* Charts */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-radius: 0;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-hospital"></i>ClinicPro</h2>
+            </div>
+            <nav class="nav-menu">
+                <div class="nav-item active" onclick="showSection('dashboard')">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </div>
+                <div class="nav-item" onclick="showSection('patients')">
+                    <i class="fas fa-user-injured"></i> Products (Medicines)
+                </div>
+                <div class="nav-item" onclick="showSection('admissions')">
+                    <i class="fas fa-bed"></i> Branches
+                </div>
+                <div class="nav-item" onclick="showSection('pharmacy')">
+                    <i class="fas fa-pills"></i> Supplier
+                </div>
+                <div class="nav-item" onclick="showSection('billing')">
+                    <i class="fas fa-file-invoice-dollar"></i> Billing
+                </div>
+                <div class="nav-item" onclick="showSection('inventory')">
+                    <i class="fas fa-box"></i> Inventory
+                </div>
+                <!-- <div class="nav-item" onclick="showSection('Logout')">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </div> -->
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <img src="images3.png" alt="Admin Logo" style="width: 40px; height: 40px; border-radius: 10px; object-fit: cover; box-shadow: 0 1px 4px rgba(0,0,0,0.10);">
+                    <h1 id="pageTitle" style="margin: 0;">ClinicPro Dashboard</h1>
+                </div>
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Admin</span>
+                    <a href="index.html" class="btn btn-danger" style="margin-left: 15px; display: flex; align-items: center; gap: 8px; text-decoration: none;">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </div>
+
+            <!-- Dashboard Section -->
+            <div id="dashboard" class="content-section active">
+                <div class="stats-grid">
+                    <div class="stat-card primary">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-user-injured"></i>
+                        </div>
+                        <div class="stat-value">1,247</div>
+                        <div class="stat-label">Total Patients</div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="stat-value">87</div>
+                        <div class="stat-label">Active Doctors</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                        <div class="stat-value">156</div>
+                        <div class="stat-label">Occupied Beds</div>
+                    </div>
+                    <div class="stat-card danger">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-value">23</div>
+                        <div class="stat-label">Critical Cases</div>
+                    </div>
+                    <div class="stat-card info">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-value">342</div>
+                        <div class="stat-label">Today's Appointments</div>
+                    </div>
+                    <div class="stat-card purple">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-value">$89,450</div>
+                        <div class="stat-label">Monthly Revenue</div>
+                    </div>
+                </div>
+                
+                <div class="charts-grid">
+                    <div class="chart-container">
+                        <h3 style="margin-bottom: 20px; color: #333;">Patient Admissions Overview</h3>
+                        <canvas id="admissionsChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3 style="margin-bottom: 20px; color: #333;">Department Distribution</h3>
+                        <canvas id="departmentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patients Section -->
+            <div id="patients" class="content-section">
+                <div class="content-header">
+                    <h2 class="content-title">Patient Management</h2>
+                    <button class="btn btn-primary" onclick="openModal('patientModal')">
+                        <i class="fas fa-plus"></i> Add Patient
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Gender</th>
+                                <th>Contact</th>
+                                <th>Status</th>
+                                <th>Last Visit</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="patientsTableBody">
+                            <tr>
+                                <td>P001</td>
+                                <td>John Smith</td>
+                                <td>45</td>
+                                <td>Male</td>
+                                <td>+1-555-0101</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>2024-01-15</td>
+                                <td>
+                                    <button class="btn btn-success btn-view" style="padding: 5px 10px; font-size: 12px;">View</button>
+                                    <button class="btn btn-warning btn-edit" style="padding: 5px 10px; font-size: 12px;">Edit</button>
+                                    <button class="btn btn-danger btn-cancel" style="padding: 5px 10px; font-size: 12px;">Cancel</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>P002</td>
+                                <td>Sarah Johnson</td>
+                                <td>32</td>
+                                <td>Female</td>
+                                <td>+1-555-0102</td>
+                                <td><span class="status-badge status-admitted">Admitted</span></td>
+                                <td>2024-01-20</td>
+                                <td>
+                                    <button class="btn btn-success btn-view" style="padding: 5px 10px; font-size: 12px;">View</button>
+                                    <button class="btn btn-warning btn-edit" style="padding: 5px 10px; font-size: 12px;">Edit</button>
+                                    <button class="btn btn-danger btn-cancel" style="padding: 5px 10px; font-size: 12px;">Cancel</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Doctors Section -->
+            <div id="doctors" class="content-section">
+                <div class="content-header">
+                    <h2 class="content-title">Doctor Management</h2>
+                    <button class="btn btn-primary" onclick="openModal('doctorModal')">
+                        <i class="fas fa-plus"></i> Add Doctor
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Doctor ID</th>
+                                <th>Name</th>
+                                <th>Specialization</th>
+                                <th>Department</th>
+                                <th>Contact</th>
+                                <th>Experience</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>D001</td>
+                                <td>Dr. Emily Wilson</td>
+                                <td>Cardiology</td>
+                                <td>Cardiology</td>
+                                <td>+1-555-0201</td>
+                                <td>12 years</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>
+                                    <button class="btn btn-success" style="padding: 5px 10px; font-size: 12px;">View</button>
+                                    <button class="btn btn-warning" style="padding: 5px 10px; font-size: 12px;">Edit</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>D002</td>
+                                <td>Dr. Michael Brown</td>
+                                <td>Neurology</td>
+                                <td>Neurology</td>
+                                <td>+1-555-0202</td>
+                                <td>8 years</td>
+                                <td><span class="status-badge status-active">Active</span></td>
+                                <td>
+                                    <button class="btn btn-success" style="padding: 5px 10px; font-size: 12px;">View</button>
+                                    <button class="btn btn-warning" style="padding: 5px 10px; font-size: 12px;">Edit</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Appointments Section -->
+            <div id="appointments" class="content-section">
+                <div class="content-header">
+                    <h2 class="content-title">Appointment Management</h2>
+                    <button class="btn btn-primary" onclick="openModal('appointmentModal')">
+                        <i class="fas fa-plus"></i> Schedule Appointment
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Appointment ID</th>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Department</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>A001</td>
+                                <td>John Smith</td>
+                                <td>Dr. Emily Wilson</td>
+                                <td>2024-01-22</td>
+                                <td>10:00 AM</td>
+                                <td>Cardiology</td>
+                                <td><span class="status-badge status-scheduled">Scheduled</span></td>
+                                <td>
+                                    <button class="btn btn-success" style="padding: 5px 10px; font-size: 12px;">Complete</button>
+                                    <button class="btn btn-danger" style="padding: 5px 10px; font-size: 12px;">Cancel</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>A002</td>
+                                <td>Sarah Johnson</td>
+                                <td>Dr. Michael Brown</td>
+                                <td>2024-01-22</td>
+                                <td>02:30 PM</td>
+                                <td>Neurology</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td>
+                                    <button class="btn btn-success" style="padding: 5px 10px; font-size: 12px;">View</button>
+                                    <button class="btn btn-warning" style="padding: 5px 10px; font-size: 12px;">Reschedule</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Admissions Section -->
+            <div id="admissions" class="content-section">
+                <div class="content-header">
+                    <h2 class="content-title">Patient Admissions</h2>
+                    <button class="btn btn-primary" onclick="openModal('admissionModal')">
+                        <i class="fas fa-plus"></i> New Admission
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Admission ID</th>
+                                <th>Patient</th>
+                                <th>Room No.</th>
+                                <th>Admission Date</th>
+                                <th>Attending Doctor</th>
+                                <th>Condition</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>AD001</td>
+                                <td>Sarah Johnson</td>
+                                <td>101</td>
+                                <td>2024-01-20</td>
+                                <td>Dr. Michael Brown</td>
+                                <td>Neurological</td>
+                                <td><span class="status-badge status-stable">Stable</span></td>
+                                <td>
+                                    <button class="btn btn-success btn-view" style="padding: 5px 10px; font-size: 12px;">View</button>
+                                    <button class="btn btn-warning btn-edit" style="padding: 5px 10px; font-size: 12px;">Edit</button>
+                                    <button class="btn btn-danger btn-discharge" style="padding: 5px 10px; font-size: 12px;">Discharge</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>AD002</td>
+                                <td>Robert Davis</td>
+                                <td>205</td>
+                                <td>2024-01-21</td>
+                                <td>Dr. Emily Wilson</td>
+                                <td>Cardiac</td>
+                                <td><span class="status-badge status-critical">Critical</span></td>
+                                <td>
+                                    <button class="btn btn-success btn-view" style="padding: 5px 10px; font-size: 12px;">View</button>
+                                    <button class="btn btn-warning btn-edit" style="padding: 5px 10px; font-size: 12px;">Edit</button>
+                                    <button class="btn btn-danger btn-discharge" style="padding: 5px 10px; font-size: 12px;">Discharge</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pharmacy Section -->
+            <div id="pharmacy" class="content-section">
+                <div class="content-header">
+                    <h2 class="content-title">Pharmacy Management</h2>
+                    <button class="btn btn-primary" onclick="openModal('medicineModal')">
+                        <i class="fas fa-plus"></i> Add Medicine
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Medicine ID</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Stock</th>
+                                <th>Unit Price</th>
+                                <th>Expiry Date</th>
+                                <th>Supplier</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>M001</td>
+                                <td>Paracetamol</td>
+                                <td>Pain Relief</td>
+                                <td>500</td>
+                                <td>$0.50</td>
+                                <td>2025-12-31</td>
+                                <td>PharmaCorp</td>
+                                <td>
+                                    <button class="btn btn-success" style="padding: 5px 10px; font-size: 12px;">View</button>
+                                    <button class="btn btn-warning" style="padding: 5px 10px; font-size: 12px;">Edit</button>
+                                    <button class="btn btn-danger btn-remove" style="padding: 5px 10px; font-size: 12px;">Remove</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>M002</td>
+                                <td>Amoxicillin</td>
+                                <td>Antibiotic</td>
+                                <td>200</td>
+                                <td>$2.50</td>
+                                <td>2024-06-15</td>
+                                <td>MediSupply</td>
+                                <td>
+                                    <button class="btn btn-success" style="padding: 5px 10px; font-size: 12px;">View</button>
+                                    <button class="btn btn-warning" style="padding: 5px 10px; font-size: 12px;">Edit</button>
+                                    <button class="btn btn-danger btn-remove" style="padding: 5px 10px; font-size: 12px;">Remove</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Billing Section -->
+            <div id="billing" class="content-section">
+                <div class="content-header">
+                    <h2 class="content-title">Billing Records</h2>
+                    <button class="btn btn-primary" onclick="openModal('billingModal')">
+                        <i class="fas fa-plus"></i> New Invoice
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Invoice ID</th>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Date</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>INV001</td>
+                                <td>John Smith</td>
+                                <td>Dr. Emily Wilson</td>
+                                <td>2024-01-22</td>
+                                <td>$120.00</td>
+                                <td><span class="status-badge status-completed">Paid</span></td>
+                                <td>
+                                    <button class="btn btn-success" style="padding: 5px 10px;">View</button>
+                                    <button class="btn btn-warning" style="padding: 5px 10px;">Edit</button>
+                                    <button class="btn btn-danger btn-remove" style="padding: 5px 10px;">Remove</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>INV002</td>
+                                <td>Sarah Johnson</td>
+                                <td>Dr. Michael Brown</td>
+                                <td>2024-01-23</td>
+                                <td>$80.00</td>
+                                <td><span class="status-badge status-active">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-success" style="padding: 5px 10px;">View</button>
+                                    <button class="btn btn-danger" style="padding: 5px 10px;">Cancel</button>
+                                    <button class="btn btn-warning btn-remove" style="padding: 5px 10px;">Remove</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Inventory Section -->
+            <div id="inventory" class="content-section">
+                <div class="content-header">
+                    <h2 class="content-title">Inventory Overview</h2>
+                    <button class="btn btn-primary" onclick="openModal('inventoryModal')">
+                        <i class="fas fa-plus"></i> Add Inventory Item
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Item ID</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Quantity</th>
+                                <th>Unit</th>
+                                <th>Reorder Level</th>
+                                <th>Expiry Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>INV101</td>
+                                <td>Glucose Bottles</td>
+                                <td>Emergency</td>
+                                <td>250</td>
+                                <td>Bottles</td>
+                                <td>50</td>
+                                <td>2025-05-30</td>
+                                <td>
+                                    <button class="btn btn-success" style="padding: 5px 10px;">View</button>
+                                    <button class="btn btn-warning" style="padding: 5px 10px;">Edit</button>
+                                    <button class="btn btn-danger btn-remove" style="padding: 5px 10px;">Remove</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>INV102</td>
+                                <td>Antibiotic Syringes</td>
+                                <td>Injection</td>
+                                <td>120</td>
+                                <td>Syringes</td>
+                                <td>30</td>
+                                <td>2025-03-15</td>
+                                <td>
+                                    <button class="btn btn-success" style="padding: 5px 10px;">View</button>
+                                    <button class="btn btn-warning" style="padding: 5px 10px;">Edit</button>
+                                    <button class="btn btn-danger btn-remove" style="padding: 5px 10px;">Remove</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Patient Modal -->
+        <div id="patientModal" class="modal" style="display:none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="modal-title">Add Patient</span>
+              <button class="close-btn" onclick="closeModal('patientModal')">&times;</button>
+            </div>
+            <form id="addPatientForm">
+              <div class="form-group">
+                <label>Name:</label>
+                <input class="form-control" name="name" required>
+              </div>
+              <div class="form-group">
+                <label>Age:</label>
+                <input class="form-control" name="age" type="number" required>
+              </div>
+              <div class="form-group">
+                <label>Gender:</label>
+                <select class="form-control" name="gender" required>
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Contact:</label>
+                <input class="form-control" name="contact" required>
+              </div>
+              <div class="form-buttons">
+                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="button" class="btn btn-warning" onclick="closeModal('patientModal')">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Admission Modal -->
+        <div id="admissionModal" class="modal" style="display:none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="modal-title">New Admission</span>
+              <button class="close-btn" onclick="closeModal('admissionModal')">&times;</button>
+            </div>
+            <form id="addAdmissionForm">
+              <div class="form-group">
+                <label>Patient:</label>
+                <input class="form-control" name="patient" required>
+              </div>
+              <div class="form-group">
+                <label>Room No.:</label>
+                <input class="form-control" name="room" required>
+              </div>
+              <div class="form-group">
+                <label>Admission Date:</label>
+                <input class="form-control" name="date" type="date" required>
+              </div>
+              <div class="form-group">
+                <label>Attending Doctor:</label>
+                <input class="form-control" name="doctor" required>
+              </div>
+              <div class="form-group">
+                <label>Condition:</label>
+                <input class="form-control" name="condition" required>
+              </div>
+              <div class="form-buttons">
+                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="button" class="btn btn-warning" onclick="closeModal('admissionModal')">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Medicine Modal -->
+        <div id="medicineModal" class="modal" style="display:none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="modal-title">Add Medicine</span>
+              <button class="close-btn" onclick="closeModal('medicineModal')">&times;</button>
+            </div>
+            <form id="addMedicineForm">
+              <div class="form-group">
+                <label>Name:</label>
+                <input class="form-control" name="name" required>
+              </div>
+              <div class="form-group">
+                <label>Category:</label>
+                <input class="form-control" name="category" required>
+              </div>
+              <div class="form-group">
+                <label>Stock:</label>
+                <input class="form-control" name="stock" type="number" required>
+              </div>
+              <div class="form-group">
+                <label>Unit Price:</label>
+                <input class="form-control" name="price" type="number" step="0.01" required>
+              </div>
+              <div class="form-group">
+                <label>Expiry Date:</label>
+                <input class="form-control" name="expiry" type="date" required>
+              </div>
+              <div class="form-group">
+                <label>Supplier:</label>
+                <input class="form-control" name="supplier" required>
+              </div>
+              <div class="form-buttons">
+                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="button" class="btn btn-warning" onclick="closeModal('medicineModal')">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Billing Modal -->
+        <div id="billingModal" class="modal" style="display:none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="modal-title">New Invoice</span>
+              <button class="close-btn" onclick="closeModal('billingModal')">&times;</button>
+            </div>
+            <form id="addBillingForm">
+              <div class="form-group">
+                <label>Patient:</label>
+                <input class="form-control" name="patient" required>
+              </div>
+              <div class="form-group">
+                <label>Doctor:</label>
+                <input class="form-control" name="doctor" required>
+              </div>
+              <div class="form-group">
+                <label>Date:</label>
+                <input class="form-control" name="date" type="date" required>
+              </div>
+              <div class="form-group">
+                <label>Total Amount:</label>
+                <input class="form-control" name="amount" type="number" step="0.01" required>
+              </div>
+              <div class="form-group">
+                <label>Status:</label>
+                <select class="form-control" name="status" required>
+                  <option value="Paid">Paid</option>
+                  <option value="Pending">Pending</option>
+                </select>
+              </div>
+              <div class="form-buttons">
+                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="button" class="btn btn-warning" onclick="closeModal('billingModal')">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Inventory Modal -->
+        <div id="inventoryModal" class="modal" style="display:none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="modal-title">Add Inventory Item</span>
+              <button class="close-btn" onclick="closeModal('inventoryModal')">&times;</button>
+            </div>
+            <form id="addInventoryForm">
+              <div class="form-group">
+                <label>Name:</label>
+                <input class="form-control" name="name" required>
+              </div>
+              <div class="form-group">
+                <label>Category:</label>
+                <input class="form-control" name="category" required>
+              </div>
+              <div class="form-group">
+                <label>Quantity:</label>
+                <input class="form-control" name="quantity" type="number" required>
+              </div>
+              <div class="form-group">
+                <label>Unit:</label>
+                <input class="form-control" name="unit" required>
+              </div>
+              <div class="form-group">
+                <label>Reorder Level:</label>
+                <input class="form-control" name="reorder" type="number" required>
+              </div>
+              <div class="form-group">
+                <label>Expiry Date:</label>
+                <input class="form-control" name="expiry" type="date" required>
+              </div>
+              <div class="form-buttons">
+                <button type="submit" class="btn btn-primary">Add</button>
+                <button type="button" class="btn btn-warning" onclick="closeModal('inventoryModal')">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- View/Edit Patient Modal -->
+        <div id="viewEditPatientModal" class="modal" style="display:none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="modal-title" id="viewEditPatientTitle">View/Edit Patient</span>
+              <button class="close-btn" onclick="closeModal('viewEditPatientModal')">&times;</button>
+            </div>
+            <form id="viewEditPatientForm">
+              <div class="form-group">
+                <label>Name:</label>
+                <input class="form-control" name="name" required>
+              </div>
+              <div class="form-group">
+                <label>Age:</label>
+                <input class="form-control" name="age" type="number" required>
+              </div>
+              <div class="form-group">
+                <label>Gender:</label>
+                <select class="form-control" name="gender" required>
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Contact:</label>
+                <input class="form-control" name="contact" required>
+              </div>
+              <div class="form-buttons">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-warning" onclick="closeModal('viewEditPatientModal')">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- View/Edit Admission Modal -->
+        <div id="viewEditAdmissionModal" class="modal" style="display:none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="modal-title" id="viewEditAdmissionTitle">View/Edit Admission</span>
+              <button class="close-btn" onclick="closeModal('viewEditAdmissionModal')">&times;</button>
+            </div>
+            <form id="viewEditAdmissionForm">
+              <div class="form-group">
+                <label>Patient:</label>
+                <input class="form-control" name="patient" required>
+              </div>
+              <div class="form-group">
+                <label>Room No.:</label>
+                <input class="form-control" name="room" required>
+              </div>
+              <div class="form-group">
+                <label>Admission Date:</label>
+                <input class="form-control" name="date" type="date" required>
+              </div>
+              <div class="form-group">
+                <label>Attending Doctor:</label>
+                <input class="form-control" name="doctor" required>
+              </div>
+              <div class="form-group">
+                <label>Condition:</label>
+                <input class="form-control" name="condition" required>
+              </div>
+              <div class="form-buttons">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-warning" onclick="closeModal('viewEditAdmissionModal')">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- View/Edit Medicine Modal -->
+        <div id="viewEditMedicineModal" class="modal" style="display:none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="modal-title" id="viewEditMedicineTitle">View/Edit Medicine</span>
+              <button class="close-btn" onclick="closeModal('viewEditMedicineModal')">&times;</button>
+            </div>
+            <form id="viewEditMedicineForm">
+              <div class="form-group">
+                <label>Name:</label>
+                <input class="form-control" name="name" required>
+              </div>
+              <div class="form-group">
+                <label>Category:</label>
+                <input class="form-control" name="category" required>
+              </div>
+              <div class="form-group">
+                <label>Stock:</label>
+                <input class="form-control" name="stock" type="number" required>
+              </div>
+              <div class="form-group">
+                <label>Unit Price:</label>
+                <input class="form-control" name="price" type="number" step="0.01" required>
+              </div>
+              <div class="form-group">
+                <label>Expiry Date:</label>
+                <input class="form-control" name="expiry" type="date" required>
+              </div>
+              <div class="form-group">
+                <label>Supplier:</label>
+                <input class="form-control" name="supplier" required>
+              </div>
+              <div class="form-buttons">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-warning" onclick="closeModal('viewEditMedicineModal')">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- View/Edit Billing Modal -->
+        <div id="viewEditBillingModal" class="modal" style="display:none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="modal-title" id="viewEditBillingTitle">View/Edit Billing</span>
+              <button class="close-btn" onclick="closeModal('viewEditBillingModal')">&times;</button>
+            </div>
+            <form id="viewEditBillingForm">
+              <div class="form-group">
+                <label>Patient:</label>
+                <input class="form-control" name="patient" required>
+              </div>
+              <div class="form-group">
+                <label>Doctor:</label>
+                <input class="form-control" name="doctor" required>
+              </div>
+              <div class="form-group">
+                <label>Date:</label>
+                <input class="form-control" name="date" type="date" required>
+              </div>
+              <div class="form-group">
+                <label>Total Amount:</label>
+                <input class="form-control" name="amount" type="number" step="0.01" required>
+              </div>
+              <div class="form-group">
+                <label>Status:</label>
+                <select class="form-control" name="status" required>
+                  <option value="Paid">Paid</option>
+                  <option value="Pending">Pending</option>
+                </select>
+              </div>
+              <div class="form-buttons">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-warning" onclick="closeModal('viewEditBillingModal')">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- View/Edit Inventory Modal -->
+        <div id="viewEditInventoryModal" class="modal" style="display:none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="modal-title" id="viewEditInventoryTitle">View/Edit Inventory</span>
+              <button class="close-btn" onclick="closeModal('viewEditInventoryModal')">&times;</button>
+            </div>
+            <form id="viewEditInventoryForm">
+              <div class="form-group">
+                <label>Name:</label>
+                <input class="form-control" name="name" required>
+              </div>
+              <div class="form-group">
+                <label>Category:</label>
+                <input class="form-control" name="category" required>
+              </div>
+              <div class="form-group">
+                <label>Quantity:</label>
+                <input class="form-control" name="quantity" type="number" required>
+              </div>
+              <div class="form-group">
+                <label>Unit:</label>
+                <input class="form-control" name="unit" required>
+              </div>
+              <div class="form-group">
+                <label>Reorder Level:</label>
+                <input class="form-control" name="reorder" type="number" required>
+              </div>
+              <div class="form-group">
+                <label>Expiry Date:</label>
+                <input class="form-control" name="expiry" type="date" required>
+              </div>
+              <div class="form-buttons">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-warning" onclick="closeModal('viewEditInventoryModal')">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+    <script>
+        // Function to show/hide sections
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show the selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update the active state in the sidebar
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Update page title
+            const titleMap = {
+                'dashboard': 'Hospital Dashboard',
+                'patients': 'Patient Management',
+                'doctors': 'Doctor Management',
+                'appointments': 'Appointment Management',
+                'admissions': 'Patient Admissions',
+                'pharmacy': 'Pharmacy Management',
+                'billing': 'Billing Records',
+                'inventory': 'Inventory Overview',
+                'Logout': 'Logout'
+            };
+            
+            document.getElementById('pageTitle').textContent = titleMap[sectionId] || 'Hospital Management System';
+            
+            if(sectionId === 'Logout') {
+                // Redirect to index.html on logout
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Function to open modal
+        function openModal(modalId) {
+            if (modalId === 'patientModal') {
+                document.getElementById(modalId).style.display = 'block';
+            } else if (modalId === 'admissionModal') {
+                document.getElementById(modalId).style.display = 'block';
+            } else if (modalId === 'medicineModal') {
+                document.getElementById(modalId).style.display = 'block';
+            } else if (modalId === 'billingModal') {
+                document.getElementById(modalId).style.display = 'block';
+            } else if (modalId === 'inventoryModal') {
+                document.getElementById(modalId).style.display = 'block';
+            } else {
+                alert(`Opening modal: ${modalId}`);
+            }
+        }
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Add patient logic
+        document.addEventListener('DOMContentLoaded', function() {
+            // Admissions Chart
+            const admissionsCtx = document.getElementById('admissionsChart').getContext('2d');
+            const admissionsChart = new Chart(admissionsCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Patient Admissions',
+                        data: [120, 190, 170, 210, 240, 200, 230, 250, 280, 300, 290, 320],
+                        backgroundColor: 'rgba(79, 172, 254, 0.2)',
+                        borderColor: 'rgba(79, 172, 254, 1)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Department Chart
+            const departmentCtx = document.getElementById('departmentChart').getContext('2d');
+            const departmentChart = new Chart(departmentCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Cardiology', 'Neurology', 'Pediatrics', 'Orthopedics', 'Oncology', 'Other'],
+                    datasets: [{
+                        data: [25, 20, 15, 15, 10, 15],
+                        backgroundColor: [
+                            'rgba(79, 172, 254, 0.8)',
+                            'rgba(6, 214, 160, 0.8)',
+                            'rgba(255, 209, 102, 0.8)',
+                            'rgba(247, 37, 133, 0.8)',
+                            'rgba(17, 138, 178, 0.8)',
+                            'rgba(114, 9, 183, 0.8)'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    }
+                }
+            });
+
+            // Add patient form logic
+            var addPatientForm = document.getElementById('addPatientForm');
+            if (addPatientForm) {
+                addPatientForm.onsubmit = function(e) {
+                    e.preventDefault();
+                    const form = e.target;
+                    const name = form.name.value;
+                    const age = form.age.value;
+                    const gender = form.gender.value;
+                    const contact = form.contact.value;
+                    // Add to table
+                    const tbody = document.getElementById('patientsTableBody');
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>NEW</td>
+                        <td>${name}</td>
+                        <td>${age}</td>
+                        <td>${gender}</td>
+                        <td>${contact}</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td>-</td>
+                        <td>
+                          <button class="btn btn-success btn-view" style="padding: 5px 10px; font-size: 12px;">View</button>
+                          <button class="btn btn-warning btn-edit" style="padding: 5px 10px; font-size: 12px;">Edit</button>
+                          <button class="btn btn-danger btn-cancel" style="padding: 5px 10px; font-size: 12px;">Cancel</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                    closeModal('patientModal');
+                    form.reset();
+                };
+            }
+            // Add admission form logic
+            var addAdmissionForm = document.getElementById('addAdmissionForm');
+            if (addAdmissionForm) {
+                addAdmissionForm.onsubmit = function(e) {
+                    e.preventDefault();
+                    const form = e.target;
+                    const patient = form.patient.value;
+                    const room = form.room.value;
+                    const date = form.date.value;
+                    const doctor = form.doctor.value;
+                    const condition = form.condition.value;
+                    // Add to table
+                    const tbody = document.querySelector('#admissions .table tbody');
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>NEW</td>
+                        <td>${patient}</td>
+                        <td>${room}</td>
+                        <td>${date}</td>
+                        <td>${doctor}</td>
+                        <td>${condition}</td>
+                        <td><span class="status-badge status-stable">Stable</span></td>
+                        <td>
+                          <button class="btn btn-success btn-view" style="padding: 5px 10px; font-size: 12px;">View</button>
+                          <button class="btn btn-warning btn-edit" style="padding: 5px 10px; font-size: 12px;">Edit</button>
+                          <button class="btn btn-danger btn-discharge" style="padding: 5px 10px; font-size: 12px;">Discharge</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                    closeModal('admissionModal');
+                    form.reset();
+                };
+            }
+            // Add medicine form logic
+            var addMedicineForm = document.getElementById('addMedicineForm');
+            if (addMedicineForm) {
+                addMedicineForm.onsubmit = function(e) {
+                    e.preventDefault();
+                    const form = e.target;
+                    const name = form.name.value;
+                    const category = form.category.value;
+                    const stock = form.stock.value;
+                    const price = form.price.value;
+                    const expiry = form.expiry.value;
+                    const supplier = form.supplier.value;
+                    // Add to table
+                    const tbody = document.querySelector('#pharmacy .table tbody');
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>NEW</td>
+                        <td>${name}</td>
+                        <td>${category}</td>
+                        <td>${stock}</td>
+                        <td>$${parseFloat(price).toFixed(2)}</td>
+                        <td>${expiry}</td>
+                        <td>${supplier}</td>
+                        <td>
+                          <button class="btn btn-success" style="padding: 5px 10px; font-size: 12px;">View</button>
+                          <button class="btn btn-warning" style="padding: 5px 10px; font-size: 12px;">Edit</button>
+                          <button class="btn btn-danger btn-remove" style="padding: 5px 10px; font-size: 12px;">Remove</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                    closeModal('medicineModal');
+                    form.reset();
+                };
+            }
+            // Add billing form logic
+            var addBillingForm = document.getElementById('addBillingForm');
+            if (addBillingForm) {
+                addBillingForm.onsubmit = function(e) {
+                    e.preventDefault();
+                    const form = e.target;
+                    const patient = form.patient.value;
+                    const doctor = form.doctor.value;
+                    const date = form.date.value;
+                    const amount = form.amount.value;
+                    const status = form.status.value;
+                    // Add to table
+                    const tbody = document.querySelector('#billing .table tbody');
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>NEW</td>
+                        <td>${patient}</td>
+                        <td>${doctor}</td>
+                        <td>${date}</td>
+                        <td>$${parseFloat(amount).toFixed(2)}</td>
+                        <td><span class="status-badge status-${status.toLowerCase()}">${status}</span></td>
+                        <td>
+                          <button class="btn btn-success" style="padding: 5px 10px;">View</button>
+                          <button class="btn btn-warning" style="padding: 5px 10px;">Edit</button>
+                          <button class="btn btn-danger btn-remove" style="padding: 5px 10px;">Remove</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                    closeModal('billingModal');
+                    form.reset();
+                };
+            }
+            // Add inventory form logic
+            var addInventoryForm = document.getElementById('addInventoryForm');
+            if (addInventoryForm) {
+                addInventoryForm.onsubmit = function(e) {
+                    e.preventDefault();
+                    const form = e.target;
+                    const name = form.name.value;
+                    const category = form.category.value;
+                    const quantity = form.quantity.value;
+                    const unit = form.unit.value;
+                    const reorder = form.reorder.value;
+                    const expiry = form.expiry.value;
+                    // Add to table
+                    const tbody = document.querySelector('#inventory .table tbody');
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>NEW</td>
+                        <td>${name}</td>
+                        <td>${category}</td>
+                        <td>${quantity}</td>
+                        <td>${unit}</td>
+                        <td>${reorder}</td>
+                        <td>${expiry}</td>
+                        <td>
+                          <button class="btn btn-success" style="padding: 5px 10px;">View</button>
+                          <button class="btn btn-warning" style="padding: 5px 10px;">Edit</button>
+                          <button class="btn btn-danger btn-remove" style="padding: 5px 10px;">Remove</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                    closeModal('inventoryModal');
+                    form.reset();
+                };
+            }
+        });
+
+        // Update patient table buttons
+        function addPatientRowHandlers(row) {
+          const viewBtn = row.querySelector('.btn-view');
+          const editBtn = row.querySelector('.btn-edit');
+          const cancelBtn = row.querySelector('.btn-cancel');
+          if (viewBtn) viewBtn.onclick = function() { openPatientModal(row, false); };
+          if (editBtn) editBtn.onclick = function() { openPatientModal(row, true); };
+          if (cancelBtn) cancelBtn.onclick = function() {
+            if (confirm('Are you sure you want to cancel this patient?')) row.remove();
+          };
+        }
+        function openPatientModal(row, editable) {
+          const cells = row.children;
+          const form = document.getElementById('viewEditPatientForm');
+          form.name.value = cells[1].textContent;
+          form.age.value = cells[2].textContent;
+          form.gender.value = cells[3].textContent;
+          form.contact.value = cells[4].textContent;
+          Array.from(form.elements).forEach(el => el.disabled = !editable);
+          document.getElementById('viewEditPatientTitle').textContent = editable ? 'Edit Patient' : 'View Patient';
+          document.getElementById('viewEditPatientModal').style.display = 'block';
+          form.onsubmit = function(e) {
+            e.preventDefault();
+            if (editable) {
+              cells[1].textContent = form.name.value;
+              cells[2].textContent = form.age.value;
+              cells[3].textContent = form.gender.value;
+              cells[4].textContent = form.contact.value;
+            }
+            closeModal('viewEditPatientModal');
+          };
+        }
+        // Update admission table buttons
+        function addAdmissionRowHandlers(row) {
+          const viewBtn = row.querySelector('.btn-view');
+          const editBtn = row.querySelector('.btn-edit');
+          const dischargeBtn = row.querySelector('.btn-discharge');
+          if (viewBtn) viewBtn.onclick = function() { openAdmissionModal(row, false); };
+          if (editBtn) editBtn.onclick = function() { openAdmissionModal(row, true); };
+          if (dischargeBtn) dischargeBtn.onclick = function() {
+            if (confirm('Are you sure you want to discharge this patient?')) row.remove();
+          };
+        }
+        function openAdmissionModal(row, editable) {
+          const cells = row.children;
+          const form = document.getElementById('viewEditAdmissionForm');
+          form.patient.value = cells[1].textContent;
+          form.room.value = cells[2].textContent;
+          form.date.value = cells[3].textContent;
+          form.doctor.value = cells[4].textContent;
+          form.condition.value = cells[5].textContent;
+          Array.from(form.elements).forEach(el => el.disabled = !editable);
+          document.getElementById('viewEditAdmissionTitle').textContent = editable ? 'Edit Admission' : 'View Admission';
+          document.getElementById('viewEditAdmissionModal').style.display = 'block';
+          form.onsubmit = function(e) {
+            e.preventDefault();
+            if (editable) {
+              cells[1].textContent = form.patient.value;
+              cells[2].textContent = form.room.value;
+              cells[3].textContent = form.date.value;
+              cells[4].textContent = form.doctor.value;
+              cells[5].textContent = form.condition.value;
+            }
+            closeModal('viewEditAdmissionModal');
+          };
+        }
+        // Update supplier, billing, inventory table buttons
+        function addSupplierRowHandlers(row) {
+          const viewBtn = row.querySelector('.btn-view');
+          const editBtn = row.querySelector('.btn-edit');
+          const removeBtn = row.querySelector('.btn-remove');
+          if (viewBtn) viewBtn.onclick = function() { openMedicineModal(row, false); };
+          if (editBtn) editBtn.onclick = function() { openMedicineModal(row, true); };
+          if (removeBtn) removeBtn.onclick = function() {
+            if (confirm('Are you sure you want to remove this medicine?')) row.remove();
+          };
+        }
+        function openMedicineModal(row, editable) {
+          const cells = row.children;
+          const form = document.getElementById('viewEditMedicineForm');
+          form.name.value = cells[1].textContent;
+          form.category.value = cells[2].textContent;
+          form.stock.value = cells[3].textContent;
+          form.price.value = cells[4].textContent.replace('$','');
+          form.expiry.value = cells[5].textContent;
+          form.supplier.value = cells[6].textContent;
+          Array.from(form.elements).forEach(el => el.disabled = !editable);
+          document.getElementById('viewEditMedicineTitle').textContent = editable ? 'Edit Medicine' : 'View Medicine';
+          document.getElementById('viewEditMedicineModal').style.display = 'block';
+          form.onsubmit = function(e) {
+            e.preventDefault();
+            if (editable) {
+              cells[1].textContent = form.name.value;
+              cells[2].textContent = form.category.value;
+              cells[3].textContent = form.stock.value;
+              cells[4].textContent = '$' + parseFloat(form.price.value).toFixed(2);
+              cells[5].textContent = form.expiry.value;
+              cells[6].textContent = form.supplier.value;
+            }
+            closeModal('viewEditMedicineModal');
+          };
+        }
+        function addBillingRowHandlers(row) {
+          const viewBtn = row.querySelector('.btn-view');
+          const editBtn = row.querySelector('.btn-edit');
+          const removeBtn = row.querySelector('.btn-remove');
+          if (viewBtn) viewBtn.onclick = function() { openBillingModal(row, false); };
+          if (editBtn) editBtn.onclick = function() { openBillingModal(row, true); };
+          if (removeBtn) removeBtn.onclick = function() {
+            if (confirm('Are you sure you want to remove this billing record?')) row.remove();
+          };
+        }
+        function openBillingModal(row, editable) {
+          const cells = row.children;
+          const form = document.getElementById('viewEditBillingForm');
+          form.patient.value = cells[1].textContent;
+          form.doctor.value = cells[2].textContent;
+          form.date.value = cells[3].textContent;
+          form.amount.value = cells[4].textContent.replace('$','');
+          // Get status from span or text
+          const statusCell = cells[5].querySelector('span') ? cells[5].querySelector('span').textContent : cells[5].textContent;
+          form.status.value = statusCell.trim();
+          Array.from(form.elements).forEach(el => el.disabled = !editable);
+          document.getElementById('viewEditBillingTitle').textContent = editable ? 'Edit Billing' : 'View Billing';
+          document.getElementById('viewEditBillingModal').style.display = 'block';
+          form.onsubmit = function(e) {
+            e.preventDefault();
+            if (editable) {
+              cells[1].textContent = form.patient.value;
+              cells[2].textContent = form.doctor.value;
+              cells[3].textContent = form.date.value;
+              cells[4].textContent = '$' + parseFloat(form.amount.value).toFixed(2);
+              cells[5].innerHTML = `<span class='status-badge status-${form.status.value.toLowerCase()}'>${form.status.value}</span>`;
+            }
+            closeModal('viewEditBillingModal');
+          };
+        }
+        function addInventoryRowHandlers(row) {
+          const viewBtn = row.querySelector('.btn-view');
+          const editBtn = row.querySelector('.btn-edit');
+          const removeBtn = row.querySelector('.btn-remove');
+          if (viewBtn) viewBtn.onclick = function() { openInventoryModal(row, false); };
+          if (editBtn) editBtn.onclick = function() { openInventoryModal(row, true); };
+          if (removeBtn) removeBtn.onclick = function() {
+            if (confirm('Are you sure you want to remove this inventory item?')) row.remove();
+          };
+        }
+        function openInventoryModal(row, editable) {
+          const cells = row.children;
+          const form = document.getElementById('viewEditInventoryForm');
+          form.name.value = cells[1].textContent;
+          form.category.value = cells[2].textContent;
+          form.quantity.value = cells[3].textContent;
+          form.unit.value = cells[4].textContent;
+          form.reorder.value = cells[5].textContent;
+          form.expiry.value = cells[6].textContent;
+          Array.from(form.elements).forEach(el => el.disabled = !editable);
+          document.getElementById('viewEditInventoryTitle').textContent = editable ? 'Edit Inventory' : 'View Inventory';
+          document.getElementById('viewEditInventoryModal').style.display = 'block';
+          form.onsubmit = function(e) {
+            e.preventDefault();
+            if (editable) {
+              cells[1].textContent = form.name.value;
+              cells[2].textContent = form.category.value;
+              cells[3].textContent = form.quantity.value;
+              cells[4].textContent = form.unit.value;
+              cells[5].textContent = form.reorder.value;
+              cells[6].textContent = form.expiry.value;
+            }
+            closeModal('viewEditInventoryModal');
+          };
+        }
+        // Attach handlers to all existing rows on DOMContentLoaded
+        function attachAllHandlers() {
+          document.querySelectorAll('#patientsTableBody tr').forEach(addPatientRowHandlers);
+          document.querySelectorAll('#admissions .table tbody tr').forEach(addAdmissionRowHandlers);
+          document.querySelectorAll('#pharmacy .table tbody tr').forEach(addSupplierRowHandlers);
+          document.querySelectorAll('#billing .table tbody tr').forEach(addBillingRowHandlers);
+          document.querySelectorAll('#inventory .table tbody tr').forEach(addInventoryRowHandlers);
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+          attachAllHandlers();
+        });
+    </script>
+</body>
+</html>

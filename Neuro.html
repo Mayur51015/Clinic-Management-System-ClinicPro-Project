@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClinicPro-Neurology</title>
+    <style>
+        body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f8fc;
+      margin: 0;
+      padding: 0;
+    }
+
+    .section {
+      padding: 50px 20px;
+      text-align: center;
+      background-color: #ffffff;
+    }
+
+    .section h2 {
+      font-size: 2.5em;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    .facilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .facility-card {
+      background-color: #e3f2fd;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+
+    .facility-card:hover {
+      transform: translateY(-5px);
+      background-color: #d0ebff;
+    }
+
+    .facility-icon {
+      font-size: 2.5em;
+      color: #1565c0;
+      margin-bottom: 15px;
+    }
+
+    .facility-title {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #0d47a1;
+      margin-bottom: 10px;
+    }
+
+    .facility-desc {
+      font-size: 0.95em;
+      color: #333;
+    }
+
+    @media screen and (max-width: 768px) {
+      .section h2 {
+        font-size: 1.8em;
+      }
+    }
+    </style>
+</head>
+<body>
+    <section class="section" id="neuro-department">
+  <h2>🧠 ClinicPro – Neurology Department Facilities</h2>
+  <div class="facilities-grid">
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-brain"></i></div>
+      <div class="facility-title">Neurological Consultation</div>
+      <div class="facility-desc">Comprehensive evaluation for headache, stroke, seizure, and memory issues.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-x-ray"></i></div>
+      <div class="facility-title">Neuro Imaging</div>
+      <div class="facility-desc">Access to MRI, CT scan reports, and analysis in collaboration with diagnostic labs.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-heartbeat"></i></div>
+      <div class="facility-title">EEG & Nerve Testing</div>
+      <div class="facility-desc">Electroencephalogram and nerve conduction studies to diagnose neuro disorders.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-user-md"></i></div>
+      <div class="facility-title">Stroke Management</div>
+      <div class="facility-desc">Immediate and follow-up care for stroke patients with rehab support.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-ambulance"></i></div>
+      <div class="facility-title">Emergency Neuro Care</div>
+      <div class="facility-desc">24x7 neuro emergency referrals and coordination with critical care units.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-file-medical"></i></div>
+      <div class="facility-title">Digital Neuro Records</div>
+      <div class="facility-desc">Secure access to neuro reports, medications, and consultation history online.</div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

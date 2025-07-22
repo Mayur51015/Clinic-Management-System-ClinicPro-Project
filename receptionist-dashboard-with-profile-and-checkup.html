@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClinicPro - Doctor Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #8e9eab, #eef2f3);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .form-card, .preview-card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 700px;
+      margin: auto;
+      padding: 30px 35px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      background: linear-gradient(to right, #0062E6, #33AEFF);
+      -webkit-background-clip: text;
+      color: transparent;
+      font-size: 28px;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 15px;
+      display: block;
+      color: #333;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    .btn {
+      margin-top: 25px;
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      background: linear-gradient(to right, #007bff, #00c6ff);
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: linear-gradient(to right, #0056b3, #0099cc);
+    }
+
+    .prescription {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .prescription strong {
+      color: #0056b3;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media print {
+      .form-card, .btn {
+        display: none;
+      }
+
+      .preview-card {
+        box-shadow: none;
+        border: none;
+        margin: 0;
+        padding: 0;
+      }
+    }
+        body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    .doctor-dashboard {
+      background-color: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      padding: 25px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .doctor-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+
+    .doctor-header img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #4caf50;
+    }
+
+    .doctor-info h2 {
+      margin: 0;
+      color: #333;
+    }
+
+    .doctor-info p {
+      margin: 4px 0;
+      color: #666;
+    }
+
+    .doctor-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .detail-box {
+      flex: 1 1 40%;
+      background: #f1f9f1;
+      border-left: 5px solid #4caf50;
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    .detail-box h4 {
+      margin: 0 0 8px;
+      color: #333;
+    }
+
+    .detail-box p {
+      margin: 0;
+      color: #555;
+    }
+
+    
+
+    
+        :root {
+            --sidebar-bg: linear-gradient(160deg, #5f6fff 0%, #7c4dff 100%);
+            --sidebar-active: #fff;
+            --sidebar-hover: rgba(255,255,255,0.12);
+            --main-bg: linear-gradient(135deg, #eaf6fb 0%, #ede7f6 100%);
+            --card-bg: #fff;
+            --icon-blue: #5f6fff;
+            --icon-purple: #7c4dff;
+            --icon-cyan: #38e8e1;
+            --text-main: #2d225a;
+            --text-muted: #6d5c99;
+            --shadow: 0 2px 12px rgba(124, 77, 255, 0.08);
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', Arial, sans-serif;
+            background: linear-gradient(135deg, #eaf6fb 0%, #ede7f6 100%);
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 300px;
+            background: var(--sidebar-bg);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 32px 0 0 0;
+            min-height: 100vh;
+            box-shadow: var(--shadow);
+        }
+        .sidebar .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 0 40px 32px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            color: #fff;
+        }
+        .sidebar .logo i {
+            margin-right: 10px;
+            font-size: 2.2rem;
+            color: var(--icon-blue);
+        }
+        .sidebar nav {
+            width: 100%;
+        }
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+        .sidebar nav ul li {
+            width: 100%;
+        }
+        .sidebar nav ul li a {
+            display: flex;
+            align-items: center;
+            padding: 14px 32px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.08rem;
+            font-weight: 500;
+            border-radius: 0 24px 24px 0;
+            margin-bottom: 4px;
+            transition: background 0.18s, color 0.18s;
+        }
+        .sidebar nav ul li a.active, .sidebar nav ul li a:hover {
+            background: var(--sidebar-hover);
+            color: var(--sidebar-active);
+        }
+        .sidebar nav ul li a i {
+            margin-right: 16px;
+            font-size: 1.2rem;
+            color: var(--icon-blue);
+            transition: color 0.18s;
+        }
+        .sidebar nav ul li a.active i, .sidebar nav ul li a:hover i {
+            color: var(--sidebar-active);
+        }
+        .logout {
+            margin-top: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            background: none;
+            border-radius: 0;
+            margin-bottom: 24px;
+            margin-left: 0;
+            padding: 0;
+        }
+        .logout a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #4817cf;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.08rem;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 32px;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(72, 23, 207, 0.08);
+            transition: background 0.18s, box-shadow 0.18s, transform 0.18s;
+            margin: 0 auto;
+        }
+        .logout a:hover {
+            background: #2d1466;
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(72, 23, 207, 0.16);
+            transform: translateY(-2px) scale(1.04);
+        }
+        .main-content {
+            flex: 1;
+            padding: 40px 5vw 40px 5vw;
+            display: flex;
+            flex-direction: column;
+            background: transparent;
+            min-height: 100vh;
+        }
+        .dashboard-title {
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: var(--icon-blue);
+            margin-bottom: 32px;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+        .dashboard-cards {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 0;
+        }
+        .card {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 2px 12px rgba(124, 77, 255, 0.08);
+            padding: 24px 28px 20px 28px;
+            min-width: 220px;
+            max-width: 260px;
+            flex: 1 1 220px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 18px;
+            position: relative;
+            transition: box-shadow 0.18s, transform 0.18s;
+            cursor: pointer;
+        }
+        .card .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: #eaf6fb;
+            font-size: 2rem;
+            margin-bottom: 0;
+        }
+        .card[data-section="appointments"] .icon {
+            background: #e3f0fd;
+            color: #1976d2;
+        }
+        .card[data-section="patients"] .icon {
+            background: #ede7f6;
+            color: #5f6fff;
+        }
+        .card[data-section="products"] .icon {
+            background: #e0f7fa;
+            color: #38e8e1;
+        }
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .card .title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #1976d2;
+            margin-bottom: 2px;
+        }
+        .card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2d225a;
+            margin-bottom: 2px;
+        }
+        .card .desc {
+            color: #6d5c99;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .card:hover {
+            box-shadow: 0 6px 18px rgba(124, 77, 255, 0.13);
+            transform: translateY(-2px) scale(1.02);
+        }
+        .recent-activity {
+            background: var(--card-bg);
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            padding: 20px 16px;
+            margin-top: 12px;
+        }
+        .recent-activity h3 {
+            color: var(--icon-blue);
+            font-size: 1.13rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        .activity-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .activity-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #ede7f6;
+            color: var(--text-main);
+            font-size: 0.98rem;
+            font-weight: 500;
+        }
+        .activity-list li:last-child {
+            border-bottom: none;
+        }
+        /* Modern table styles for data visualization */
+        .table-container {max-width: 900px; margin: 32px auto 0 auto; background: #fff; border-radius: 16px; box-shadow: 0 2px 12px rgba(124, 77, 255, 0.08); padding: 24px;}
+        table {width: 100%; border-collapse: collapse; margin-top: 10px;}
+        th, td {padding: 12px 10px; border-bottom: 1px solid #e0e7ef; text-align: left;}
+        th {background: #eaf6fb; color: #1976d2; font-size: 1.08rem;}
+        tr:last-child td {border-bottom: none;}
+        tr:hover {background: #f4f8fb;}
+        .action-btn {padding: 7px 16px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; margin-right: 8px; transition: background 0.18s;}
+        .update-btn {background: #1976d2; color: #fff;}
+        .update-btn:hover {background: #1251a3;}
+        .delete-btn {background: #ff5252; color: #fff;}
+        .delete-btn:hover {background: #d32f2f;}
+        .chart-container {
+            max-width: 900px;
+            margin: 32px auto 24px auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(124, 77, 255, 0.08);
+            padding: 24px 24px 16px 24px;
+        }
+        @media (max-width: 900px) {
+            .dashboard-cards {
+                flex-direction: column;
+                gap: 16px;
+                align-items: center;
+            }
+            .main-content {
+                padding: 24px 2vw;
+            }
+        }
+        @media (max-width: 600px) {
+            .sidebar {
+                width: 100px;
+                padding: 16px 0 0 0;
+            }
+            .sidebar .logo {
+                font-size: 1.1rem;
+                margin-left: 10px;
+            }
+            .sidebar nav ul li a {
+                padding: 10px 8px;
+                font-size: 0.9rem;
+            }
+            .main-content {
+                padding: 10px 2vw;
+            }
+            .dashboard-title {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo"><i class="fas fa-hospital-user"></i> ClinicPro</div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active" data-section="dashboard"><i class="fas fa-th-large"></i> Dashboard</a></li>
+                <li><a href="#" data-section="appointments"><i class="fas fa-calendar-check"></i> Manage Appointments</a></li>
+                <li><a href="#" data-section="patients"><i class="fas fa-users"></i> Manage Patients</a></li>
+                <li><a href="#" data-section="checkup" onclick="showSection('checkup')"><i class="fas fa-stethoscope"></i> Checkup</a></li>
+                <li><a href="#" data-section="products"><i class="fas fa-box"></i> prescription</a></li>
+            </ul>
+        </nav>
+        <div class="logout">
+            <a href="#" data-section="logout"> Logout</a>
+        </div>
+    </div>
+    <div class="main-content">
+        <div id="dashboard-section">
+            <div class="dashboard-title">Receptionist Dashboard</div>
+            <div class="chart-container">
+                <canvas id="dashboardChart" height="100"></canvas>
+            </div>
+            <div class="dashboard-cards">
+                <a href="#" class="card" data-section="appointments" style="text-decoration:none;">
+                    <span class="icon"><i class="fas fa-calendar-check"></i></span>
+                    <span class="card-content">
+                        <span class="title">Appointments</span>
+                        <span class="value" id="appointments-summary">24</span>
+                        <span class="desc">This Month</span>
+                    </span>
+                </a>
+                <a href="#" class="card" data-section="patients" style="text-decoration:none;">
+                    <span class="icon"><i class="fas fa-users"></i></span>
+                    <span class="card-content">
+                        <span class="title">Patients</span>
+                        <span class="value" id="patients-summary">53</span>
+                        <span class="desc">This Month</span>
+                    </span>
+                </a>
+                <a href="#" class="card" data-section="products" style="text-decoration:none;">
+                    <span class="icon"><i class="fas fa-box"></i></span>
+                    <span class="card-content">
+                        <span class="title">Products</span>
+                        <span class="value" id="products-summary">12</span>
+                        <span class="desc">This Month</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+        <!-- Modal Structure (reusable for all sections) -->
+        <div id="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(44, 41, 61, 0.25); z-index:1000; justify-content:center; align-items:center;">
+          <div id="modal" style="background:#fff; border-radius:14px; box-shadow:0 8px 32px rgba(124,77,255,0.13); padding:32px 24px; min-width:320px; max-width:90vw; position:relative;">
+            <button id="modal-close" style="position:absolute; top:12px; right:16px; background:none; border:none; font-size:1.5rem; color:#7c4dff; cursor:pointer;">&times;</button>
+            <div id="modal-content"></div>
+          </div>
+        </div>
+        <div id="appointments-section" style="display:none;">
+            <div class="dashboard-title">Appointments Management</div>
+            <button class="open-modal-btn" data-modal="appointments" style="background:var(--icon-blue); color:#fff; border:none; border-radius:6px; padding:8px 18px; font-weight:600; cursor:pointer; margin-bottom:18px;">+ Add Appointment</button>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>Date & Time</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Doe</td>
+                            <td>2024-07-21 10:00 AM</td>
+                            <td>Upcoming</td>
+                            <td>
+                                <button class="action-btn update-btn">Update</button>
+                                <button class="action-btn delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Jane Smith</td>
+                            <td>2024-07-21 11:00 AM</td>
+                            <td>Upcoming</td>
+                            <td>
+                                <button class="action-btn update-btn">Update</button>
+                                <button class="action-btn delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Michael Brown</td>
+                            <td>2024-07-21 12:00 PM</td>
+                            <td>Upcoming</td>
+                            <td>
+                                <button class="action-btn update-btn">Update</button>
+                                <button class="action-btn delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="patients-section" style="display:none;">
+            <div class="dashboard-title">Patients Management</div>
+            <button class="open-modal-btn" data-modal="patients" style="background:var(--icon-blue); color:#fff; border:none; border-radius:6px; padding:8px 18px; font-weight:600; cursor:pointer; margin-bottom:18px;">+ Add Patient</button>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>Contact Info</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Jane Smith</td>
+                            <td>+1 555-1234</td>
+                            <td>Registered</td>
+                            <td>
+                                <button class="action-btn update-btn">Update</button>
+                                <button class="action-btn delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>John Doe</td>
+                            <td>+1 555-5678</td>
+                            <td>Registered</td>
+                            <td>
+                                <button class="action-btn update-btn">Update</button>
+                                <button class="action-btn delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Michael Brown</td>
+                            <td>+1 555-8765</td>
+                            <td>Registered</td>
+                            <td>
+                                <button class="action-btn update-btn">Update</button>
+                                <button class="action-btn delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="products-section" style="display:none;">
+            <div class="dashboard-title">prescription</div>
+            <button class="open-modal-btn" data-modal="products" style="background:var(--icon-purple); color:#fff; border:none; border-radius:6px; padding:8px 18px; font-weight:600; cursor:pointer; margin-bottom:18px;">+ Add Product</button>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bandages</td>
+                            <td>120</td>
+                            <td>In Stock</td>
+                            <td>
+                                <button class="action-btn update-btn">Update</button>
+                                <button class="action-btn delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Thermometers</td>
+                            <td>30</td>
+                            <td>In Stock</td>
+                            <td>
+                                <button class="action-btn update-btn">Update</button>
+                                <button class="action-btn delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Gloves</td>
+                            <td>200</td>
+                            <td>In Stock</td>
+                            <td>
+                                <button class="action-btn update-btn">Update</button>
+                                <button class="action-btn delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="profile-section" style="display:none;"></div>
+        
+<div id="checkup-section" style="display:none;">
+  <div class="form-card">
+    <h2>Patient Checkup</h2>
+    <form id="checkupForm">
+      <label for="patientId">Patient ID (if existing)</label>
+      <input type="text" id="patientId" name="patientId">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" required>
+      <label for="age">Age</label>
+      <input type="number" id="age" required>
+      <label for="history">Patient History</label>
+      <textarea id="history" rows="2" required></textarea>
+      <label for="symptoms">Symptoms</label>
+      <textarea id="symptoms" rows="2" required></textarea>
+      <label for="diagnosis">Diagnosis</label>
+      <textarea id="diagnosis" rows="2" required></textarea>
+      <label for="medicine">Prescribed Medicines</label>
+      <textarea id="medicine" rows="2" required></textarea>
+      <label for="schedule">Follow-up Date</label>
+      <input type="date" id="schedule">
+      <button type="submit" class="btn">Generate Prescription</button>
+    </form>
+  </div>
+  <div class="preview-card hidden" id="previewCard">
+    <h2>Prescription</h2>
+    <div class="prescription" id="prescriptionOutput"></div>
+    <button onclick="window.print()" class="btn">Print Prescription</button>
+  </div>
+</div>
+
+<div id="future-appointments-section" style="display:none;">
+            <div class="dashboard-title">Future Appointments</div>
+            <button class="open-modal-btn" data-modal="future-appointments" style="background:var(--icon-cyan); color:#fff; border:none; border-radius:6px; padding:8px 18px; font-weight:600; cursor:pointer; margin-bottom:18px;">+ Add Future Appointment</button>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>Date & Time</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Doe</td>
+                            <td>2024-07-21 10:00 AM</td>
+                            <td>Upcoming</td>
+                            <td>
+                                <button class="action-btn update-btn">Update</button>
+                                <button class="action-btn delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Jane Smith</td>
+                            <td>2024-07-21 11:00 AM</td>
+                            <td>Upcoming</td>
+                            <td>
+                                <button class="action-btn update-btn">Update</button>
+                                <button class="action-btn delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="logout-section" style="display:none; text-align:center;">
+            <!-- This section is no longer needed, as logout will redirect -->
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js">
+sections['checkup'] = document.getElementById('checkup-section');
+
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('checkupForm');
+  const previewCard = document.getElementById('previewCard');
+  const output = document.getElementById('prescriptionOutput');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const age = document.getElementById('age').value;
+      const patientId = document.getElementById('patientId').value || "New Patient";
+      const history = document.getElementById('history').value;
+      const symptoms = document.getElementById('symptoms').value;
+      const diagnosis = document.getElementById('diagnosis').value;
+      const medicine = document.getElementById('medicine').value;
+      const schedule = document.getElementById('schedule').value;
+
+      output.innerHTML = `
+        <p><strong>Patient ID:</strong> ${patientId}</p>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Age:</strong> ${age}</p>
+        <p><strong>History:</strong> ${history}</p>
+        <p><strong>Symptoms:</strong> ${symptoms}</p>
+        <p><strong>Diagnosis:</strong> ${diagnosis}</p>
+        <p><strong>Medicines:</strong> ${medicine}</p>
+        <p><strong>Follow-up Date:</strong> ${schedule || 'N/A'}</p>
+      `;
+      previewCard.classList.remove('hidden');
+      window.scrollTo({ top: previewCard.offsetTop, behavior: 'smooth' });
+    });
+  }
+});
+
+
+</script>
+    <script>
+        
+        const sections = {
+            'dashboard': document.getElementById('dashboard-section'),
+            'appointments': document.getElementById('appointments-section'),
+            'patients': document.getElementById('patients-section'),
+            'products': document.getElementById('products-section'),
+            'future-appointments': document.getElementById('future-appointments-section'),
+            'logout': document.getElementById('logout-section')
+        };
+        function showSection(section) {
+            if (section === 'logout') {
+                window.location.href = 'index.html';
+                return;
+            }
+            for (const key in sections) {
+                sections[key].style.display = (key === section) ? '' : 'none';
+            }
+            // Update active class in sidebar
+            document.querySelectorAll('.sidebar nav ul li a').forEach(link => {
+                if (link.dataset.section === section) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+        document.querySelectorAll('[data-section]').forEach(el => {
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+                showSection(this.dataset.section);
+            });
+        });
+        // Default to dashboard
+        showSection('dashboard');
+
+        // --- Modal Logic ---
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalContent = document.getElementById('modal-content');
+        const modalClose = document.getElementById('modal-close');
+        let currentModal = null;
+
+        function openModal(type) {
+            currentModal = type;
+            let formHtml = '';
+            if (type === 'appointments') {
+                formHtml = `<h2 style='color:var(--icon-blue);margin-bottom:16px;'>Add Appointment</h2>
+                    <form id='modal-appointments-form' style='display:flex;flex-direction:column;gap:14px;'>
+                        <input type='text' id='modal-appointment-name' placeholder='Patient Name' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                        <input type='datetime-local' id='modal-appointment-datetime' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                        <button type='submit' style='background:var(--icon-blue); color:#fff; border:none; border-radius:6px; padding:8px 18px; font-weight:600; cursor:pointer;'>Add</button>
+                    </form>`;
+            } else if (type === 'patients') {
+                formHtml = `<h2 style='color:var(--icon-blue);margin-bottom:16px;'>Add Patient</h2>
+                    <form id='modal-patients-form' style='display:flex;flex-direction:column;gap:14px;'>
+                        <input type='text' id='modal-patient-name' placeholder='Patient Name' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                        <input type='text' id='modal-patient-contact' placeholder='Contact Info' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                        <button type='submit' style='background:var(--icon-blue); color:#fff; border:none; border-radius:6px; padding:8px 18px; font-weight:600; cursor:pointer;'>Add</button>
+                    </form>`;
+            } else if (type === 'products') {
+                formHtml = `<h2 style='color:var(--icon-purple);margin-bottom:16px;'>Add Product</h2>
+                    <form id='modal-products-form' style='display:flex;flex-direction:column;gap:14px;'>
+                        <input type='text' id='modal-product-name' placeholder='Product Name' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                        <input type='number' id='modal-product-qty' placeholder='Quantity' min='1' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                        <button type='submit' style='background:var(--icon-purple); color:#fff; border:none; border-radius:6px; padding:8px 18px; font-weight:600; cursor:pointer;'>Add</button>
+                    </form>`;
+            } else if (type === 'future-appointments') {
+                formHtml = `<h2 style='color:var(--icon-cyan);margin-bottom:16px;'>Add Future Appointment</h2>
+                    <form id='modal-future-appointments-form' style='display:flex;flex-direction:column;gap:14px;'>
+                        <input type='text' id='modal-future-appointment-name' placeholder='Patient Name' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                        <input type='datetime-local' id='modal-future-appointment-datetime' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                        <button type='submit' style='background:var(--icon-cyan); color:#fff; border:none; border-radius:6px; padding:8px 18px; font-weight:600; cursor:pointer;'>Add</button>
+                    </form>`;
+            }
+            modalContent.innerHTML = formHtml;
+            modalOverlay.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modalOverlay.style.display = 'none';
+            modalContent.innerHTML = '';
+            currentModal = null;
+        }
+
+        document.querySelectorAll('.open-modal-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                openModal(this.dataset.modal);
+            });
+        });
+        modalClose.onclick = closeModal;
+        modalOverlay.onclick = function(e) {
+            if (e.target === modalOverlay) closeModal();
+        };
+
+        // Modal form submit handlers (delegated)
+        modalContent.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!currentModal) return;
+            if (currentModal === 'appointments') {
+                const name = document.getElementById('modal-appointment-name').value.trim();
+                const dt = document.getElementById('modal-appointment-datetime').value;
+                if (name && dt) {
+                    const date = new Date(dt);
+                    const formatted = `${name} - ${date.toLocaleString()}`;
+                    const li = document.createElement('li');
+                    li.textContent = formatted;
+                    document.getElementById('appointments-list').appendChild(li);
+                    closeModal();
+                }
+            } else if (currentModal === 'patients') {
+                const name = document.getElementById('modal-patient-name').value.trim();
+                const contact = document.getElementById('modal-patient-contact').value.trim();
+                if (name && contact) {
+                    const li = document.createElement('li');
+                    li.textContent = `${name} - ${contact}`;
+                    document.getElementById('patients-list').appendChild(li);
+                    closeModal();
+                }
+            } else if (currentModal === 'products') {
+                const name = document.getElementById('modal-product-name').value.trim();
+                const qty = document.getElementById('modal-product-qty').value;
+                if (name && qty) {
+                    const li = document.createElement('li');
+                    li.textContent = `${name} - ${qty} in stock`;
+                    document.getElementById('products-list').appendChild(li);
+                    closeModal();
+                }
+            } else if (currentModal === 'future-appointments') {
+                const name = document.getElementById('modal-future-appointment-name').value.trim();
+                const dt = document.getElementById('modal-future-appointment-datetime').value;
+                if (name && dt) {
+                    const date = new Date(dt);
+                    const formatted = `${name} - ${date.toLocaleString()}`;
+                    const li = document.createElement('li');
+                    li.textContent = formatted;
+                    document.getElementById('future-appointments-list').appendChild(li);
+                    closeModal();
+                }
+            }
+        });
+
+        // --- Data Table Functionality ---
+        let currentRow = null;
+        function addTableActions(row) {
+          row.querySelector('.delete-btn').onclick = function() {
+            if (confirm('Are you sure you want to delete this row?')) {
+              row.remove();
+            }
+          };
+          row.querySelector('.update-btn').onclick = function() {
+            currentRow = row; // Always set currentRow when opening update modal
+            const section = row.closest('table').parentElement.parentElement.id;
+            let formHtml = '';
+            let cells = row.querySelectorAll('td');
+            if (section === 'appointments-section' || section === 'future-appointments-section') {
+              formHtml = `
+                <h2 style='color:#1976d2;margin-bottom:16px;'>Update Appointment</h2>
+                <form id='update-form' style='display:flex;flex-direction:column;gap:14px;'>
+                  <input type='text' id='update-name' value='${cells[0].textContent}' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                  <input type='text' id='update-datetime' value='${cells[1].textContent}' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                  <input type='text' id='update-status' value='${cells[2].textContent}' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                  <button type='submit' style='background:#1976d2; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-weight:600; cursor:pointer;'>Save</button>
+                </form>
+              `;
+            } else if (section === 'patients-section') {
+              formHtml = `
+                <h2 style='color:#1976d2;margin-bottom:16px;'>Update Patient</h2>
+                <form id='update-form' style='display:flex;flex-direction:column;gap:14px;'>
+                  <input type='text' id='update-name' value='${cells[0].textContent}' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                  <input type='text' id='update-contact' value='${cells[1].textContent}' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                  <input type='text' id='update-status' value='${cells[2].textContent}' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                  <button type='submit' style='background:#1976d2; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-weight:600; cursor:pointer;'>Save</button>
+                </form>
+              `;
+            } else if (section === 'products-section') {
+              formHtml = `
+                <h2 style='color:#7c4dff;margin-bottom:16px;'>Update Product</h2>
+                <form id='update-form' style='display:flex;flex-direction:column;gap:14px;'>
+                  <input type='text' id='update-name' value='${cells[0].textContent}' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                  <input type='number' id='update-qty' value='${cells[1].textContent}' min='1' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                  <input type='text' id='update-status' value='${cells[2].textContent}' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                  <button type='submit' style='background:#7c4dff; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-weight:600; cursor:pointer;'>Save</button>
+                </form>
+              `;
+            }
+            document.getElementById('modal-content').innerHTML = formHtml;
+            document.getElementById('modal-overlay').style.display = 'flex';
+          };
+        }
+        function applyTableActions() {
+          document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.onclick = function() {
+              if (confirm('Are you sure you want to delete this row?')) {
+                this.closest('tr').remove();
+              }
+            };
+          });
+          document.querySelectorAll('.update-btn').forEach(btn => {
+            btn.onclick = function() {
+              const row = this.closest('tr');
+              addTableActions(row);
+              row.querySelector('.update-btn').onclick();
+            };
+          });
+        }
+        applyTableActions();
+        // Add functionality for all "+ Add" buttons
+        document.querySelectorAll('.open-modal-btn').forEach(btn => {
+          btn.onclick = function() {
+            const section = btn.closest('div').id;
+            let formHtml = '';
+            if (section === 'appointments-section' || section === 'future-appointments-section') {
+              formHtml = `
+                <h2 style='color:#1976d2;margin-bottom:16px;'>Add Appointment</h2>
+                <form id='add-form' style='display:flex;flex-direction:column;gap:14px;'>
+                  <input type='text' id='add-name' placeholder='Patient Name' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                  <input type='text' id='add-datetime' placeholder='Date & Time' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                  <input type='text' id='add-status' placeholder='Status' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                  <button type='submit' style='background:#1976d2; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-weight:600; cursor:pointer;'>Add</button>
+                </form>
+              `;
+            } else if (section === 'patients-section') {
+              formHtml = `
+                <h2 style='color:#1976d2;margin-bottom:16px;'>Add Patient</h2>
+                <form id='add-form' style='display:flex;flex-direction:column;gap:14px;'>
+                  <input type='text' id='add-name' placeholder='Patient Name' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                  <input type='text' id='add-contact' placeholder='Contact Info' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                  <input type='text' id='add-status' placeholder='Status' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                  <button type='submit' style='background:#1976d2; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-weight:600; cursor:pointer;'>Add</button>
+                </form>
+              `;
+            } else if (section === 'products-section') {
+              formHtml = `
+                <h2 style='color:#7c4dff;margin-bottom:16px;'>Add Product</h2>
+                <form id='add-form' style='display:flex;flex-direction:column;gap:14px;'>
+                  <input type='text' id='add-name' placeholder='Product Name' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                  <input type='number' id='add-qty' placeholder='Quantity' min='1' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                  <input type='text' id='add-status' placeholder='Status' required style='padding:8px 12px; border-radius:6px; border:1px solid #ccc; font-size:1rem;'>
+                  <button type='submit' style='background:#7c4dff; color:#fff; border:none; border-radius:6px; padding:8px 18px; font-weight:600; cursor:pointer;'>Add</button>
+                </form>
+              `;
+            }
+            document.getElementById('modal-content').innerHTML = formHtml;
+            document.getElementById('modal-overlay').style.display = 'flex';
+            window.currentSection = section;
+          };
+        });
+        document.getElementById('modal-content').addEventListener('submit', function(e) {
+          if (e.target && e.target.id === 'add-form') {
+            e.preventDefault();
+            const section = window.currentSection;
+            let row = document.createElement('tr');
+            if (section === 'appointments-section' || section === 'future-appointments-section') {
+              const name = document.getElementById('add-name').value;
+              const datetime = document.getElementById('add-datetime').value;
+              const status = document.getElementById('add-status').value;
+              row.innerHTML = `<td>${name}</td><td>${datetime}</td><td>${status}</td><td><button class='action-btn update-btn'>Update</button> <button class='action-btn delete-btn'>Delete</button></td>`;
+            } else if (section === 'patients-section') {
+              const name = document.getElementById('add-name').value;
+              const contact = document.getElementById('add-contact').value;
+              const status = document.getElementById('add-status').value;
+              row.innerHTML = `<td>${name}</td><td>${contact}</td><td>${status}</td><td><button class='action-btn update-btn'>Update</button> <button class='action-btn delete-btn'>Delete</button></td>`;
+            } else if (section === 'products-section') {
+              const name = document.getElementById('add-name').value;
+              const qty = document.getElementById('add-qty').value;
+              const status = document.getElementById('add-status').value;
+              row.innerHTML = `<td>${name}</td><td>${qty}</td><td>${status}</td><td><button class='action-btn update-btn'>Update</button> <button class='action-btn delete-btn'>Delete</button></td>`;
+            }
+            const table = document.querySelector(`#${section} table tbody`);
+            table.appendChild(row);
+            addTableActions(row);
+            document.getElementById('modal-overlay').style.display = 'none';
+            document.getElementById('modal-content').innerHTML = '';
+          } else if (e.target && e.target.id === 'update-form') {
+            e.preventDefault();
+            if (!currentRow) return;
+            const section = currentRow.closest('table').parentElement.parentElement.id;
+            const cells = currentRow.querySelectorAll('td');
+            if (section === 'appointments-section' || section === 'future-appointments-section') {
+              cells[0].textContent = document.getElementById('update-name').value;
+              cells[1].textContent = document.getElementById('update-datetime').value;
+              cells[2].textContent = document.getElementById('update-status').value;
+            } else if (section === 'patients-section') {
+              cells[0].textContent = document.getElementById('update-name').value;
+              cells[1].textContent = document.getElementById('update-contact').value;
+              cells[2].textContent = document.getElementById('update-status').value;
+            } else if (section === 'products-section') {
+              cells[0].textContent = document.getElementById('update-name').value;
+              cells[1].textContent = document.getElementById('update-qty').value;
+              cells[2].textContent = document.getElementById('update-status').value;
+            }
+            document.getElementById('modal-overlay').style.display = 'none';
+            document.getElementById('modal-content').innerHTML = '';
+            currentRow = null;
+          }
+        });
+
+        // --- Dashboard Chart ---
+        const ctx = document.getElementById('dashboardChart').getContext('2d');
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const appointmentsData = [12, 19, 14, 17, 22, 25, 20, 18, 23, 21, 19, 24];
+        const patientsData = [30, 28, 35, 40, 38, 45, 50, 48, 52, 49, 47, 53];
+        const productsData = [5, 7, 6, 8, 9, 10, 8, 7, 9, 11, 10, 12];
+        const dashboardChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: months,
+                datasets: [
+                    {
+                        label: 'Appointments',
+                        data: appointmentsData,
+                        backgroundColor: 'rgba(25, 118, 210, 0.7)',
+                        borderColor: 'rgba(25, 118, 210, 1)',
+                        borderWidth: 1,
+                        borderRadius: 6,
+                    },
+                    {
+                        label: 'Patients',
+                        data: patientsData,
+                        backgroundColor: 'rgba(92, 39, 251, 0.7)',
+                        borderColor: 'rgba(92, 39, 251, 1)',
+                        borderWidth: 1,
+                        borderRadius: 6,
+                    },
+                    {
+                        label: 'Products',
+                        data: productsData,
+                        backgroundColor: 'rgba(56, 232, 225, 0.7)',
+                        borderColor: 'rgba(56, 232, 225, 1)',
+                        borderWidth: 1,
+                        borderRadius: 6,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: { size: 16 }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Monthly Statistics',
+                        font: { size: 20 }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        title: { display: true, text: 'Month', font: { size: 15 } }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Count', font: { size: 15 } }
+                    }
+                }
+            }
+        });
+        // Sync summary cards with latest month data
+        document.getElementById('appointments-summary').textContent = appointmentsData[appointmentsData.length - 1];
+        document.getElementById('patients-summary').textContent = patientsData[patientsData.length - 1];
+        document.getElementById('products-summary').textContent = productsData[productsData.length - 1];
+    
+sections['checkup'] = document.getElementById('checkup-section');
+
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('checkupForm');
+  const previewCard = document.getElementById('previewCard');
+  const output = document.getElementById('prescriptionOutput');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const age = document.getElementById('age').value;
+      const patientId = document.getElementById('patientId').value || "New Patient";
+      const history = document.getElementById('history').value;
+      const symptoms = document.getElementById('symptoms').value;
+      const diagnosis = document.getElementById('diagnosis').value;
+      const medicine = document.getElementById('medicine').value;
+      const schedule = document.getElementById('schedule').value;
+
+      output.innerHTML = `
+        <p><strong>Patient ID:</strong> ${patientId}</p>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Age:</strong> ${age}</p>
+        <p><strong>History:</strong> ${history}</p>
+        <p><strong>Symptoms:</strong> ${symptoms}</p>
+        <p><strong>Diagnosis:</strong> ${diagnosis}</p>
+        <p><strong>Medicines:</strong> ${medicine}</p>
+        <p><strong>Follow-up Date:</strong> ${schedule || 'N/A'}</p>
+      `;
+      previewCard.classList.remove('hidden');
+      window.scrollTo({ top: previewCard.offsetTop, behavior: 'smooth' });
+    });
+  }
+});
+
+</script>
+</body>
+</html> 

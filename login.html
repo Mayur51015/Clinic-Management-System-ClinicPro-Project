@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ClinicPro - Login</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 450px;
+    }
+
+    .login-card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .login-header {
+      background: linear-gradient(to right, #0077b6, #00b4d8);
+      padding: 30px 20px;
+      text-align: center;
+      color: white;
+    }
+
+    .logo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      margin-bottom: 5px;
+    }
+
+    .login-body {
+      padding: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .input-icon {
+      position: relative;
+      margin-bottom: 15px;
+    }
+
+    .input-icon i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6c757d;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 15px 12px 40px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #00b4d8;
+      box-shadow: 0 0 0 0.25rem rgba(0, 180, 216, 0.25);
+    }
+
+    .role-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .role-option {
+      flex: 1 0 calc(33% - 10px);
+      min-width: 120px;
+    }
+
+    .role-option input[type='radio'] {
+      display: none;
+    }
+
+    .role-option label {
+      display: block;
+      padding: 12px 10px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+
+    .role-option input[type='radio']:checked + label {
+      background: #e3f2fd;
+      border-color: #0077b6;
+      color: #0077b6;
+      font-weight: 600;
+    }
+
+    .role-option label:hover {
+      background: #e9ecef;
+    }
+
+    .role-icon {
+      font-size: 20px;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .btn-login {
+      background: linear-gradient(to right, #0077b6, #00b4d8);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      width: 100%;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
+    }
+
+    .btn-login:hover {
+      background: linear-gradient(to right, #0067a6, #00a4c8);
+      transform: translateY(-2px);
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 20px;
+      color: #6c757d;
+      font-size: 14px;
+    }
+
+    .form-footer a {
+      color: #0077b6;
+      text-decoration: none;
+    }
+
+    .form-footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="logo-text">ClinicPro</div>
+        <p>Professional Healthcare Management System</p>
+      </div>
+      <div class="login-body">
+        <form method="POST" action="#">
+          <div class="role-selector">
+            <div class="role-option">
+              <input
+                type="radio"
+                id="role-doctor"
+                name="role"
+                value="doctor"
+                checked
+              />
+              <label for="role-doctor">
+                <i class="fas fa-user-md role-icon"></i>
+                Doctor
+              </label>
+            </div>
+            <div class="role-option">
+              <input
+                type="radio"
+                id="role-assistant-doctor"
+                name="role"
+                value="assistant-doctor"
+              />
+              <label for="role-assistant-doctor">
+                <i class="fas fa-user-md role-icon"></i>
+                Ass. Doctor
+              </label>
+            </div>
+            <div class="role-option">
+              <input
+                type="radio"
+                id="role-receptionist"
+                name="role"
+                value="receptionist"
+              />
+              <label for="role-receptionist">
+                <i class="fas fa-headset role-icon"></i>
+                Receptionist
+              </label>
+            </div>
+            <div class="role-option">
+              <input type="radio" id="role-admin" name="role" value="admin" />
+              <label for="role-admin">
+                <i class="fas fa-user-shield role-icon"></i>
+                Admin
+              </label>
+            </div>
+            <div class="role-option">
+              <input
+                type="radio"
+                id="role-pharmacist"
+                name="role"
+                value="pharmacist"
+              />
+              <label for="role-pharmacist">
+                <i class="fas fa-pills role-icon"></i>
+                Pharmacist
+              </label>
+            </div>
+            <div class="role-option">
+              <input type="radio" id="role-patient" name="role" value="patient" />
+              <label for="role-patient">
+                <i class="fas fa-user-injured role-icon"></i>
+                Patient
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-icon">
+              <i class="fas fa-user"></i>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                name="username"
+                placeholder="Username"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-icon">
+              <i class="fas fa-lock"></i>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                placeholder="Password"
+                required
+              />
+            </div>
+          </div>
+
+          <button type="submit" class="btn-login">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </button>
+
+          <div class="form-footer">
+            <p>
+              Don't have an account?
+              <a href="Register-Here.html"><b>Patient Registration</b></a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!--
+    JavaScript below checks username/password based on selected role.
+    On success, redirects to the role's page.
+    Customize usernames, passwords, and page URLs below.
+  -->
+  <script>
+    const credentials = {
+      doctor: {
+        username: "Doc1",
+        password: "Docpass123",
+        page: "Doctor_dashboard.html", // <-- Replace with your actual doctor page
+      },
+      "assistant-doctor": {
+        username: "AssDoc1",
+        password: "AssDocpass123",
+        page: "checkup.html", // <-- Assistant doctors use the same dashboard as doctors
+      },
+      receptionist: {
+        username: "Recept1",
+        password: "Recepass123",
+        page: "receptionist-dashboard-with-profile-and-checkup.html", // <-- Replace with receptionist page
+      },
+      admin: {
+        username: "Admin1",
+        password: "Adminpass123",
+        page: "admin.html", // <-- Replace with admin page
+      },
+      pharmacist: {
+        username: "Pharma1",
+        password: "Pharmapass123",
+        page: "Pharma.html", // <-- Replace with pharmacist page
+      },
+      patient: {
+        username: "Patient1",
+        password: "Patientpass123",
+        page: "patient_page.html", // <-- Replace with patient page
+      },
+    };
+
+    document.querySelector("form").addEventListener("submit", function (e) {
+      e.preventDefault(); // prevent form submission
+
+      const role = document.querySelector('input[name="role"]:checked').value;
+      const enteredUsername = document.getElementById("username").value.trim();
+      const enteredPassword = document.getElementById("password").value;
+
+      if (credentials[role]) {
+        const cred = credentials[role];
+        if (
+          enteredUsername === cred.username &&
+          enteredPassword === cred.password
+        ) {
+          // Redirect to the role-specific page
+          window.location.href = cred.page;
+        } else {
+          alert("Invalid username or password for " + role + ". Please try again.");
+        }
+      } else {
+        alert("Invalid role selected.");
+      }
+    });
+  </script>
+</body>
+</html>

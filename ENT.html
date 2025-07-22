@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClinicPro-ENT</title>
+    <style>
+        body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f8fc;
+      margin: 0;
+      padding: 0;
+    }
+
+    .section {
+      padding: 50px 20px;
+      text-align: center;
+      background-color: #ffffff;
+    }
+
+    .section h2 {
+      font-size: 2.5em;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    .facilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .facility-card {
+      background-color: #e3f2fd;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+
+    .facility-card:hover {
+      transform: translateY(-5px);
+      background-color: #d0ebff;
+    }
+
+    .facility-icon {
+      font-size: 2.5em;
+      color: #1565c0;
+      margin-bottom: 15px;
+    }
+
+    .facility-title {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #0d47a1;
+      margin-bottom: 10px;
+    }
+
+    .facility-desc {
+      font-size: 0.95em;
+      color: #333;
+    }
+
+    @media screen and (max-width: 768px) {
+      .section h2 {
+        font-size: 1.8em;
+      }
+    }
+    </style>
+</head>
+<body>
+    <section class="section" id="ent-department">
+  <h2>🦻 ClinicPro – ENT Department Facilities</h2>
+  <div class="facilities-grid">
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-stethoscope"></i></div>
+      <div class="facility-title">Comprehensive Ear Checkups</div>
+      <div class="facility-desc">Advanced tools for diagnosing ear infections, hearing loss, and tinnitus.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-head-side-virus"></i></div>
+      <div class="facility-title">Nose & Sinus Treatments</div>
+      <div class="facility-desc">Diagnosis and treatment of sinusitis, nasal blockages, and allergies.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-head-side-cough"></i></div>
+      <div class="facility-title">Throat & Voice Care</div>
+      <div class="facility-desc">Expert care for sore throat, hoarseness, tonsillitis, and speech issues.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-microscope"></i></div>
+      <div class="facility-title">Audiometry & Endoscopy</div>
+      <div class="facility-desc">State-of-the-art diagnostic tools like audiometry and nasal endoscopy.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-user-nurse"></i></div>
+      <div class="facility-title">ENT Surgical Referrals</div>
+      <div class="facility-desc">Expert consultation and referral for surgeries like tonsillectomy & septoplasty.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-notes-medical"></i></div>
+      <div class="facility-title">Digital ENT Records</div>
+      <div class="facility-desc">All ENT-related diagnoses, prescriptions & tests available online securely.</div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

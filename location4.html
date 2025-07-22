@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ClinicPro - Kharadi Branch</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f1f8ff;
+      margin: 0;
+      padding: 30px;
+      color: #2c3e50;
+    }
+
+    .clinic-container {
+      max-width: 920px;
+      margin: auto;
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .clinic-image {
+      flex: 1 1 320px;
+      background-image: url('Limg 4.avif'); /* Replace if needed */
+      background-size: cover;
+      background-position: center;
+      min-height: 350px;
+    }
+
+    .clinic-details {
+      flex: 1 1 580px;
+      padding: 30px;
+    }
+
+    .clinic-details h2 {
+      margin-top: 0;
+      font-size: 28px;
+      color: #2b7bd1;
+    }
+
+    .info-list {
+      list-style: none;
+      padding: 0;
+      line-height: 1.7;
+    }
+
+    .info-list li {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .info-list ul {
+      padding-left: 18px;
+      margin: 0;
+    }
+
+    .doctor-list {
+      margin-top: 20px;
+      background: #eaf4ff;
+      padding: 15px 20px;
+      border-left: 4px solid #3498db;
+      border-radius: 8px;
+    }
+
+    .doctor-list h3 {
+      margin-top: 0;
+      color: #1e5c8e;
+    }
+
+    .doctor-list li::before {
+      content: "👨‍⚕️ ";
+    }
+
+    .doctor-list ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    @media screen and (max-width: 768px) {
+      .clinic-container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="clinic-container">
+    <div class="clinic-image"></div>
+
+    <div class="clinic-details">
+      <h2>🖥 ClinicPro - Kharadi Branch</h2>
+      <ul class="info-list">
+        <li>📍 <strong>Location:</strong> Near EON IT Park – modern residential-tech blend.</li>
+        <li>🏢 <strong>Clinic Highlights:</strong></li>
+        <ul>
+          <li>• Premium setup with teleconsultation booths.</li>
+          <li>• Integrated mobile app support for appointments & prescriptions.</li>
+        </ul>
+      </ul>
+
+      <div class="doctor-list">
+        <h3>👨‍⚕ Our Multi-Specialist Doctors</h3>
+        <ul>
+          <li>Dr. Reshma Bhagat – Cardiologist</li>
+          <li>Dr. Manish Shah – Gynecologist</li>
+          <li>Dr. Farah Khan – General Physician</li>
+          <li>Dr. Aditya Joshi – Neurologist</li>
+          <li>Dr. Leena D’Mello – Endocrinologist</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

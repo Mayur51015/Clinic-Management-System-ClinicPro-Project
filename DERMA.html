@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClinicPro-Derma</title>
+    <style>
+        body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f8fc;
+      margin: 0;
+      padding: 0;
+    }
+
+    .section {
+      padding: 50px 20px;
+      text-align: center;
+      background-color: #ffffff;
+    }
+
+    .section h2 {
+      font-size: 2.5em;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    .facilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .facility-card {
+      background-color: #e3f2fd;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+
+    .facility-card:hover {
+      transform: translateY(-5px);
+      background-color: #d0ebff;
+    }
+
+    .facility-icon {
+      font-size: 2.5em;
+      color: #1565c0;
+      margin-bottom: 15px;
+    }
+
+    .facility-title {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #0d47a1;
+      margin-bottom: 10px;
+    }
+
+    .facility-desc {
+      font-size: 0.95em;
+      color: #333;
+    }
+
+    @media screen and (max-width: 768px) {
+      .section h2 {
+        font-size: 1.8em;
+      }
+    }
+    </style>
+</head>
+<body>
+    <section class="section" id="derma-department">
+  <h2>🧴 ClinicPro – Dermatology Department Facilities</h2>
+  <div class="facilities-grid">
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-spa"></i></div>
+      <div class="facility-title">Skin Consultation</div>
+      <div class="facility-desc">Personalized care for acne, pigmentation, eczema, rashes, and more.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-magic"></i></div>
+      <div class="facility-title">Laser Treatments</div>
+      <div class="facility-desc">Advanced laser therapies for hair removal, scar reduction & skin resurfacing.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-allergies"></i></div>
+      <div class="facility-title">Allergy Testing</div>
+      <div class="facility-desc">Skin allergy diagnostics to identify triggers and build treatment plans.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-heart"></i></div>
+      <div class="facility-title">Cosmetic Dermatology</div>
+      <div class="facility-desc">Botox, fillers, skin tightening, and anti-aging treatments by experts.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-burn"></i></div>
+      <div class="facility-title">Psoriasis & Vitiligo</div>
+      <div class="facility-desc">Expertise in managing chronic skin conditions with latest medications.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-flask"></i></div>
+      <div class="facility-title">Skin Biopsy Services</div>
+      <div class="facility-desc">Precise biopsy services for detecting skin cancers & infections early.</div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

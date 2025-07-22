@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Patient Registration</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f8ff;
+      color: #333;
+    }
+
+    header {
+      background-color: #3aafa9;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    nav ul {
+      list-style: none;
+      margin-top: 1rem;
+    }
+
+    nav ul li {
+      display: inline;
+      margin: 0 1rem;
+    }
+
+    nav ul li a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    main {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 1.5rem;
+      color: #2c3e50;
+    }
+
+    .form-container {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 2rem;
+      padding: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .form-container img {
+      width: 1000px;
+      height: auto;
+      border: 4px solid #3aafa9;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    form {
+      background-color: #ffffff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      flex: 1;
+      min-width: 300px;
+      max-width: 600px;
+      text-align: left;
+    }
+
+    form label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+
+    form input,
+    form select,
+    form textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      outline-color: #3aafa9;
+    }
+
+    form textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    form button {
+      margin-top: 1.5rem;
+      padding: 0.7rem 1.5rem;
+      background-color: #3aafa9;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    form button:hover {
+      background-color: #2b7a78;
+    }
+
+    footer {
+      background-color: #3aafa9;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ClinicPro</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">🏠Home</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1 style="size: 50px;">👉🏻Patient Registration</h1>
+
+    <div class="form-container">
+      <img src="image4.jpg" alt="Patient Registration" />
+
+      <form id="patientForm" action="/register" method="POST">
+        <label>Full Name:</label>
+        <input type="text" name="name" required />
+
+        <label>Age:</label>
+        <input type="number" name="age" required min="0" max="120" />
+
+        <label>Gender:</label>
+        <select name="gender" required>
+          <option value="">Select Gender</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+
+        <label>Contact:</label>
+        <input type="text" name="contact" required pattern="[0-9]{10}" placeholder="10-digit mobile number" />
+        <label>Email ID:</label>
+        <input type="email" name="email" />
+
+        <label>Visit:</label>
+        <select name="visit" required>
+          <option value="">Select Visit Type</option>
+          <option>First Visit</option>
+          <option>Recheckup</option>
+        </select>
+
+        <label>Symptoms:</label>
+        <textarea name="symptoms" required></textarea>
+
+        <label>Address:</label>
+        <textarea name="address" required></textarea>
+
+        <!-- <label>Email ID:</label>
+        <input type="email" name="email" /> -->
+
+        <button type="button" onclick="window.location.href='index.html'">Register Patient</button>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 <b>ClinicPro</b>. All Rights Reserved</p>
+  </footer>
+
+  <script>
+    document.getElementById("patientForm").addEventListener("submit", function(event) {
+      const contact = document.querySelector('input[name="contact"]').value;
+      if (!/^\d{10}$/.test(contact)) {
+        alert("Please enter a valid 10-digit mobile number.");
+        event.preventDefault();
+      }
+    });
+  </script>
+</body>
+</html>

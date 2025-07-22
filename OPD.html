@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ClinicPro OPD Facilities</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f8fc;
+      margin: 0;
+      padding: 0;
+    }
+
+    .section {
+      padding: 50px 20px;
+      text-align: center;
+      background-color: #ffffff;
+    }
+
+    .section h2 {
+      font-size: 2.5em;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    .facilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .facility-card {
+      background-color: #e3f2fd;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+
+    .facility-card:hover {
+      transform: translateY(-5px);
+      background-color: #d0ebff;
+    }
+
+    .facility-icon {
+      font-size: 2.5em;
+      color: #1565c0;
+      margin-bottom: 15px;
+    }
+
+    .facility-title {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #0d47a1;
+      margin-bottom: 10px;
+    }
+
+    .facility-desc {
+      font-size: 0.95em;
+      color: #333;
+    }
+
+    @media screen and (max-width: 768px) {
+      .section h2 {
+        font-size: 1.8em;
+      }
+    }
+  </style>
+
+  <!-- Font Awesome for Icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<section class="section" id="opd-facilities">
+  <h2>🏥 ClinicPro – OPD Department Facilities</h2>
+  <div class="facilities-grid">
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-calendar-check"></i></div>
+      <div class="facility-title">Online Appointments</div>
+      <div class="facility-desc">Book your visit online with ease through our portal or app.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-user-md"></i></div>
+      <div class="facility-title">Multi-Specialty Doctors</div>
+      <div class="facility-desc">Consult top doctors from various departments at one location.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-chair"></i></div>
+      <div class="facility-title">Comfortable Waiting Area</div>
+      <div class="facility-desc">Spacious, hygienic waiting lounges with digital display tokens.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-pills"></i></div>
+      <div class="facility-title">On-site Pharmacy</div>
+      <div class="facility-desc">Collect your prescribed medicines instantly at discounted rates.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-file-medical-alt"></i></div>
+      <div class="facility-title">Digital Health Records</div>
+      <div class="facility-desc">Access your prescriptions, visits, and history digitally & securely.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-vials"></i></div>
+      <div class="facility-title">Diagnostic Support</div>
+      <div class="facility-desc">In-house sample collection and tie-ups with top diagnostic labs.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-shield-virus"></i></div>
+      <div class="facility-title">Hygiene & Safety</div>
+      <div class="facility-desc">Strict safety protocols including masks, sanitization, and screening.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-headset"></i></div>
+      <div class="facility-title">Reception Assistance</div>
+      <div class="facility-desc">Our friendly staff will assist you with queries, bills, and doctor info.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-sync-alt"></i></div>
+      <div class="facility-title">Easy Follow-ups</div>
+      <div class="facility-desc">Receive reminders and follow-up appointment assistance easily.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-video"></i></div>
+      <div class="facility-title">Teleconsultation</div>
+      <div class="facility-desc">Get expert care from your home using our secure video call service.</div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Optional interactive behavior
+  const cards = document.querySelectorAll('.facility-card');
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      alert("For more info, please contact our help desk!");
+    });
+  });
+</script>
+
+</body>
+</html>

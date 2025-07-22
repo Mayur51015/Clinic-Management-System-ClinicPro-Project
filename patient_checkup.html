@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkup Module</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #8e9eab, #eef2f3);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .form-card, .preview-card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 700px;
+      margin: auto;
+      padding: 30px 35px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      background: linear-gradient(to right, #0062E6, #33AEFF);
+      -webkit-background-clip: text;
+      color: transparent;
+      font-size: 28px;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 15px;
+      display: block;
+      color: #333;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    .btn {
+      margin-top: 25px;
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      background: linear-gradient(to right, #007bff, #00c6ff);
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: linear-gradient(to right, #0056b3, #0099cc);
+    }
+
+    .prescription {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .prescription strong {
+      color: #0056b3;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media print {
+      .form-card, .btn {
+        display: none;
+      }
+
+      .preview-card {
+        box-shadow: none;
+        border: none;
+        margin: 0;
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-card">
+    <h2>Patient Checkup</h2>
+
+    <form id="checkupForm">
+      <label for="patientId">Patient ID (if existing)</label>
+      <input type="text" id="patientId" name="patientId">
+
+      <label for="name">Full Name</label>
+      <input type="text" id="name" required>
+
+      <label for="age">Age</label>
+      <input type="number" id="age" required>
+
+      <label for="history">Patient History</label>
+      <textarea id="history" rows="2" required></textarea>
+
+      <label for="symptoms">Symptoms</label>
+      <textarea id="symptoms" rows="2" required></textarea>
+
+      <label for="diagnosis">Diagnosis</label>
+      <textarea id="diagnosis" rows="2" required></textarea>
+
+      <label for="medicine">Prescribed Medicines</label>
+      <textarea id="medicine" rows="2" required></textarea>
+
+      <label for="schedule">Follow-up Date</label>
+      <input type="date" id="schedule">
+
+      <button type="submit" class="btn">Generate Prescription</button>
+    </form>
+  </div>
+
+  <div class="preview-card hidden" id="previewCard">
+    <h2>Prescription</h2>
+    <div class="prescription" id="prescriptionOutput"></div>
+    <button onclick="window.print()" class="btn">Print Prescription</button>
+  </div>
+
+  <script>
+    const form = document.getElementById('checkupForm');
+    const previewCard = document.getElementById('previewCard');
+    const output = document.getElementById('prescriptionOutput');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const age = document.getElementById('age').value;
+      const patientId = document.getElementById('patientId').value || "New Patient";
+      const history = document.getElementById('history').value;
+      const symptoms = document.getElementById('symptoms').value;
+      const diagnosis = document.getElementById('diagnosis').value;
+      const medicine = document.getElementById('medicine').value;
+      const schedule = document.getElementById('schedule').value;
+
+      output.innerHTML = `
+        <p><strong>Patient ID:</strong> ${patientId}</p>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Age:</strong> ${age}</p>
+        <p><strong>History:</strong> ${history}</p>
+        <p><strong>Symptoms:</strong> ${symptoms}</p>
+        <p><strong>Diagnosis:</strong> ${diagnosis}</p>
+        <p><strong>Medicines:</strong> ${medicine}</p>
+        <p><strong>Follow-up Date:</strong> ${schedule || 'N/A'}</p>
+      `;
+
+      previewCard.classList.remove('hidden');
+      window.scrollTo({ top: previewCard.offsetTop, behavior: 'smooth' });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClinicPro-Cardio</title>
+    <style>
+        body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f8fc;
+      margin: 0;
+      padding: 0;
+    }
+
+    .section {
+      padding: 50px 20px;
+      text-align: center;
+      background-color: #ffffff;
+    }
+
+    .section h2 {
+      font-size: 2.5em;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    .facilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 20px 0;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .facility-card {
+      background-color: #e3f2fd;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+
+    .facility-card:hover {
+      transform: translateY(-5px);
+      background-color: #d0ebff;
+    }
+
+    .facility-icon {
+      font-size: 2.5em;
+      color: #1565c0;
+      margin-bottom: 15px;
+    }
+
+    .facility-title {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #0d47a1;
+      margin-bottom: 10px;
+    }
+
+    .facility-desc {
+      font-size: 0.95em;
+      color: #333;
+    }
+
+    @media screen and (max-width: 768px) {
+      .section h2 {
+        font-size: 1.8em;
+      }
+    }
+    </style>
+</head>
+<body>
+    <style>
+  .section {
+    padding: 40px 20px;
+    background-color: #fffafc;
+  }
+
+  .section h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #c9184a;
+    margin-bottom: 30px;
+  }
+
+  .facilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .facility-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+  }
+
+  .facility-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .facility-icon {
+    font-size: 2.2rem;
+    color: #c9184a;
+    margin-bottom: 10px;
+  }
+
+  .facility-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+
+  .facility-desc {
+    font-size: 0.95rem;
+    color: #333;
+  }
+</style>
+<section class="section" id="cardiology-department">
+  <h2>❤️ ClinicPro – Cardiology Department Facilities</h2>
+  <div class="facilities-grid">
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-heartbeat"></i></div>
+      <div class="facility-title">Cardiac Consultation</div>
+      <div class="facility-desc">Expert evaluation for chest pain, hypertension, cholesterol & heart health.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-stethoscope"></i></div>
+      <div class="facility-title">ECG & ECHO</div>
+      <div class="facility-desc">On-site ECG and referral-based Echocardiogram to detect heart abnormalities.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-x-ray"></i></div>
+      <div class="facility-title">Cardiac Risk Screening</div>
+      <div class="facility-desc">Tests for diabetes, lipid profile, and stress assessment to prevent heart disease.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-ambulance"></i></div>
+      <div class="facility-title">Emergency Heart Care</div>
+      <div class="facility-desc">Emergency response, referrals to cardiac hospitals, and critical care link-ups.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-user-md"></i></div>
+      <div class="facility-title">Follow-up Plans</div>
+      <div class="facility-desc">Ongoing management for blood pressure, lifestyle diseases, and medication adjustments.</div>
+    </div>
+
+    <div class="facility-card">
+      <div class="facility-icon"><i class="fas fa-notes-medical"></i></div>
+      <div class="facility-title">Heart Health Records</div>
+      <div class="facility-desc">Digital records of your ECGs, prescriptions, and vitals for easy access anytime.</div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

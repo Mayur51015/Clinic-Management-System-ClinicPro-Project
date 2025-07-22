@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Projects Section */
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .project-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+        
+        .project-info {
+            padding: 1.5rem;
+        }
+        
+        .project-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .project-info p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .project-tag {
+            background: rgba(108, 99, 255, 0.1);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .project-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: 0.3s;
+        }
+        
+        .project-links a:hover {
+            color: var(--secondary);
+
+        }
+
+        body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background-color: #f4f9ff;
+      color: #333;
+    }
+
+    .facilities-section {
+      max-width: 1000px;
+      margin: 60px auto;
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    }
+
+    .facilities-section h2 {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #0077cc;
+    }
+
+    .facilities-section p {
+      font-size: 16px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .facility-points {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .facility-points li::before {
+      content: "✅";
+      margin-right: 10px;
+      color: #28a745;
+    }
+
+    .facility-points li {
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .highlight {
+      background: #eaf8ff;
+      padding: 10px 15px;
+      border-left: 4px solid #0077cc;
+      margin-top: 20px;
+      font-style: italic;
+    }
+        /* Contact Section */
+        * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4fbff;
+      color: #333;
+      padding: 20px;
+    }
+
+    .section {
+      padding: 60px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section-title h2 {
+      text-align: center;
+      font-size: 32px;
+      color: #2b7bd1;
+      margin-bottom: 40px;
+    }
+
+    .contact-container {
+      display: flex;
+      flex-wrap: wrap;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.07);
+      overflow: hidden;
+    }
+
+    .contact-info {
+      flex: 1 1 40%;
+      padding: 30px;
+      background-color: #eaf4ff;
+    }
+
+    .contact-info h3 {
+      font-size: 24px;
+      color: #1d4e89;
+      margin-bottom: 15px;
+    }
+
+    .contact-info p {
+      font-size: 15px;
+      margin-bottom: 25px;
+      color: #333;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+    }
+
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      background-color: #2b7bd1;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      margin-right: 15px;
+      font-size: 18px;
+    }
+
+    .contact-text h4 {
+      margin: 0;
+      font-size: 16px;
+      color: #2b7bd1;
+    }
+
+    .contact-text a,
+    .contact-text p {
+      font-size: 14px;
+      color: #333;
+      text-decoration: none;
+    }
+
+    .contact-form {
+      flex: 1 1 60%;
+      padding: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #2b7bd1;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      resize: none;
+    }
+
+    textarea {
+      height: 120px;
+    }
+
+    .btn {
+      background-color: #2b7bd1;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #1d5fa1;
+    }
+
+    @media (max-width: 768px) {
+      .contact-container {
+        flex-direction: column;
+      }
+      .contact-info,
+      .contact-form {
+        padding: 20px;
+      }
+    }
+    </style>
+    
+</head>
+<body>
+    <section class="section" id="projects">
+        <div class="section-title">
+            <h1 style="text-align: center;"><b>KNOW MORE ABOUT US</b></h1>
+           <a href="index.html" ><br><h2><button class="fancy-see-more btn btn-primary" style="padding: 10px;background-color: rgb(123, 211, 211);">🏠Home</button></h2></a>
+            <div><p style="text-align: center;text-decoration: solid;"><br><b>Who We Are</b><br>
+ProClinic is a modern, technology-enabled healthcare facility dedicated to providing compassionate, efficient, and expert medical care. We combine innovation with clinical excellence to offer a patient-first approach in every service we deliver.</p></div></div>
+        </div>
+        <br>
+        <br>
+
+        <div class="projects-container">
+            <!-- Project 1 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="image7.jpg" alt="ClinicPro Shivajinagar Branch">
+                </div>
+                <div class="project-info">
+                    <h3>🏥 ClinicPro Shivajinagar Branch
+	•	📍 Location: Central Pune – near railway station, colleges, and markets.
+</h3>
+                    <p>Family-friendly with pediatric play zone and elderly support services.
+	•	Organizes community health drives.</p>
+                    <div class="project-tags">
+                    </div>
+                    <div class="project-links">
+                        <a href="location 1.html" target="_blank"><i class="fas fa-external-link-alt"></i><button class="fancy-see-more btn btn-primary  " style="position: absolute;background-color: darkcyan;margin-bottom: 25px;">See More...</button></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 2 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="image6.jpeg" alt="ClinicPro Hinjewadi Branch">
+                </div>
+                <div class="project-info">
+                    <h3>💼 ClinicPro Hinjewadi Branch
+	•	📍 Location: Rajiv Gandhi Infotech Park – corporate & IT zone.
+</h3>
+<p>Smart clinic with QR-code check-ins & digital prescriptions.
+	•	Corporate health partnerships with tech companies.
+</p>
+                    <div class="project-links">
+                        <a href="loction2.html" target="_blank"><i class="fas fa-external-link-alt"></i><button class="fancy-see-more btn btn-primary mt-5" style="position: absolute;background-color: darkcyan; margin-top: 25px;">See More...</button></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 3 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="image5.jpeg" alt="ClinicPro Kothrud Branch">
+                </div>
+                <div class="project-info">
+                    <h3>🏡 ClinicPro Kothrud Branch
+	•	📍 Location: Quiet, well-developed residential neighborhood.
+</h3>
+                    <p>Family-friendly with pediatric play zone and elderly support </p>
+                    <div class="project-links">
+                        <a href="location3.html" target="_blank"><i class="fas fa-external-link-alt"></i> <button class="fancy-see-more btn btn-primary" style="position: absolute;background-color: darkcyan; margin-top: 78px;">See More...</button>
+</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Project 4 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="image8.jpeg" alt="ClinicPro Kharadi Branch">
+                </div>
+                <div class="project-info">
+                    <h3>🖥 ClinicPro Kharadi Branch
+	•	📍 Location: Near EON IT Park – modern residential-tech blend.</h3>
+                    <p> Premium setup with teleconsultation booths.
+                      •	Integrated mobile app support for appointments & prescriptions.
+
+	</p>
+                    <div class="project-links">
+                        <a href="location4.html" target="_blank"><i class="fas fa-external-link-alt"></i><br><button class="fancy-see-more btn btn-primary" style="position: absolute;background-color: darkcyan; margin: 25
+                        px;">See more...</button></a>
+                    </div>
+                </div>
+            </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="facilities-section">
+    <h2>Our Facilities & Services</h2>
+    <p>
+      At <strong>ClinicPro</strong>, we are committed to providing world-class medical services with compassion, technology, and trust. From routine check-ups to specialized treatments, we offer end-to-end solutions for all your healthcare needs.
+    </p>
+
+    <ul class="facility-points">
+      <li>24/7 Emergency and Trauma Care Unit</li>
+      <li>Multi-Specialty Consultation (20+ Medical Fields)</li>
+      <li>Advanced Diagnostic Laboratory & Imaging (X-ray, MRI, CT)</li>
+      <li>Online Teleconsultation & E-Prescriptions</li>
+      <li>Digitized Health Records & Appointment Booking</li>
+      <li>Pharmacy with Home Delivery Services</li>
+      <li>Vaccination Drives & Preventive Health Packages</li>
+      <li>In-house Physiotherapy & Rehabilitation Services</li>
+      <li>Child Care, Women’s Health, and Elder Support Units</li>
+      <li>Cashless Insurance Facility with Leading Providers</li>
+      <li>Corporate Health Plans for IT & Industrial Sectors</li>
+    </ul>
+
+    <div class="highlight">
+      “Combining expert care with innovation and accessibility — we’re not just treating patients, we’re building a healthier community.”
+    </div>
+  </section>
+
+
+   <section class="section" id="contact">
+    <div class="section-title">
+      <h2>Contact Us to connect with Us</h2>
+    </div>
+    <div class="contact-container">
+      <div class="contact-info">
+        <h3>Let's connect With Us</h3>
+        <p>
+          Your health is our priority. Connect with us for expert care and support.<br />
+          Connecting you with care, comfort, and convenience — anytime you need us.
+        </p>
+
+        <div class="contact-details">
+          <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+            <div class="contact-text">
+              <h4>Email</h4>
+              <a href="mailto:ClinicPro@gmail.com">ClinicPro@gmail.com</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-phone"></i></div>
+            <div class="contact-text">
+              <h4>Phone</h4>
+              <a href="tel:+919021689441">+91 9021689441</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="contact-text">
+              <h4>Location</h4>
+              <p>Pune, Maharashtra, India</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" placeholder="Enter your name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Your Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required />
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" placeholder="Enter subject" />
+          </div>
+          <div class="form-group">
+            <label for="message">Your Message</label>
+            <textarea id="message" placeholder="Enter your message" required></textarea>
+          </div>
+          <button type="submit" class="btn">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      if (!name || !email || !message) {
+        alert("Please fill out all required fields.");
+        return;
+      }
+
+      // Simulated success message
+      alert("Thank you, " + name + "! Your message has been sent successfully.");
+
+      // Reset form
+      this.reset();
+    });
+  </script>
+
+     
+</body>
+</html>

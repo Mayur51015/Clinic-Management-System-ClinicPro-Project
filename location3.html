@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ClinicPro - Kothrud Branch</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f6f9fc;
+      margin: 0;
+      padding: 30px;
+      color: #333;
+    }
+
+    .clinic-container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .clinic-image {
+      flex: 1 1 300px;
+      background-image: url('Limg 3.avif'); /* Replace with your image */
+      background-size: cover;
+      background-position: center;
+      min-height: 350px;
+    }
+
+    .clinic-details {
+      flex: 1 1 500px;
+      padding: 30px;
+    }
+
+    .clinic-details h2 {
+      margin-top: 0;
+      font-size: 28px;
+      color: #2a8ed0;
+    }
+
+    .info-list {
+      list-style: none;
+      padding: 0;
+      line-height: 1.8;
+    }
+
+    .info-list li {
+      font-size: 16px;
+    }
+
+    .doctor-list {
+      margin-top: 20px;
+      background: #f0f8ff;
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    .doctor-list h3 {
+      margin-top: 0;
+      color: #1f7aa9;
+    }
+
+    .doctor-list ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .doctor-list li::before {
+      content: "👨‍⚕️ ";
+    }
+
+    @media screen and (max-width: 768px) {
+      .clinic-container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="clinic-container">
+    <div class="clinic-image"></div>
+
+    <div class="clinic-details">
+      <h2>🏡 ClinicPro - Kothrud Branch</h2>
+      <ul class="info-list">
+        <li>📍 <strong>Location:</strong> Quiet, well-developed residential neighborhood.</li>
+        <li>🏢 <strong>Clinic Highlights:</strong></li>
+        <ul>
+          <li>• Family-friendly with pediatric play zone and elderly support services.</li>
+          <li>• Organizes community health drives.</li>
+        </ul>
+      </ul>
+
+      <div class="doctor-list">
+        <h3>👨‍⚕ Our Multi-Specialist Doctors</h3>
+        <ul>
+          <li>Dr. Sneha Jadhav – Pediatrician</li>
+          <li>Dr. Rajesh Mahajan – Physiotherapist</li>
+          <li>Dr. Priya Desai – Family Physician</li>
+          <li>Dr. Nilesh Mehta – Psychiatrist</li>
+          <li>Dr. Kavita Kulkarni – Gynecologist</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
